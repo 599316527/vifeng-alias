@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+    <channel>
+        <atom:link href="${feedUrl}" type="application/rss+xml" rel="self" />
+        <copyright>Copyright © ${year} iFeng</copyright>
+        <language>zh-cn</language>
+        <link>http://phtv.ifeng.com/program/${programId}/</link>
+        <title>${info.name}</title>
+        <itunes:keywords>${info.name}</itunes:keywords>
+        <itunes:author>iFeng</itunes:author>
+        <itunes:subtitle>${info.name}</itunes:subtitle>
+
+        <!-- import: description -->
+            <!-- block: text -->${info.desc}<!-- /block -->
+        <!-- /import -->
+
+        <itunes:image href="${info.headPic}" />
+        <itunes:owner>
+            <itunes:name>Kyle He</itunes:name>
+            <itunes:email>ohyes@hk1229.cn</itunes:email>
+        </itunes:owner>
+
+<!-- for: ${items} as ${item} -->
+<item>
+    <title>${item.title}</title>
+    <itunes:author>${item.author}</itunes:author>
+    <itunes:subtitle>${item.subtitle}</itunes:subtitle>
+    <itunes:image href="${item.image}" />
+    <enclosure url="${item.mediaUrl}" type="${item.mimeType}" length="${item.filesize}"/>
+    <guid>${item.guid}</guid>
+    <pubDate>${item.pubData}</pubDate>
+    <itunes:duration>${item.duration}</itunes:duration>
+    <itunes:isClosedCaptioned>no</itunes:isClosedCaptioned>
+    <link>${item.link}</link>
+    <!-- import: description -->
+        <!-- block: text -->${item.desc}<!-- /block -->
+    <!-- /import -->
+</item>
+<!-- /for -->
+
+    </channel>
+</rss>
+
+<!-- target: feedback -->
+<!-- // 反馈 -->
+<p>Feedback 👉
+🌀Weibo: <a href="http://weibo.com/327303000" target="_blank">@_何凯_</a>
+🐦Twitter: <a href="https://twitter.com/kyleehee" target="_blank">@kyleehee</a>
+</p>
+<!-- /target -->
+
+<!-- target: description -->
+<!-- // 描述 -->
+<itunes:summary><![CDATA[
+<p><!-- block: text --><!-- /block --></p>
+<!-- import: feedback -->
+]]></itunes:summary>
+<description>
+<!-- block: text --><!-- /block -->
+<!-- filter: strip-tags -->
+    <!-- import: feedback -->
+<!-- /filter -->
+</description>
+<!-- /target -->
+

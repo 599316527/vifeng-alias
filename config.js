@@ -21,6 +21,18 @@ const programs = {
     },
     yhyxt: {
         weMediaId: 104
+    },
+    ssztc: {
+        weMediaId: 74
+    },
+    xwjrt: {
+        weMediaId: 22
+    },
+    zbjsj: {
+        weMediaId: 24
+    },
+    jqgcs: {
+        weMediaId: 100
     }
 }
 
@@ -28,4 +40,8 @@ exports.vifeng = {
     api: vifengApi,
     userAgent,
     programs
+}
+
+exports.podcast = {
+    feedBaseUrl: 'https://hk1229.cn/vifeng/podcast/'
 }
