@@ -7,5 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Kyle <ohyes@hk1229.cn>",
-  "license": "LGPL"
+  "license": "LGPL",
+  "dependencies": {
+    "minimist": "^1.2.0",
+    "mongodb": "^2.2.29",
+    "node-fetch": "^1.7.1"
+  }
 }
