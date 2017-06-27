@@ -43,5 +43,13 @@ exports.vifeng = {
 }
 
 exports.podcast = {
-    feedBaseUrl: 'https://hk1229.cn/vifeng/podcast/'
+    feedBaseUrl: 'https://hk1229.cn/vifeng/podcast/',
+    programs: {
+        qqsrx: {
+            album: {
+                video: 'https://storage.adeline.cc/image/podcast/qqsrx/video.jpg',
+                audio: 'https://storage.adeline.cc/image/podcast/qqsrx/audio.jpg'
+            }
+        }
+    }
 }

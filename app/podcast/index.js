@@ -13,12 +13,19 @@ etpl.addFilter('strip-tags', function (source, useExtra) {
 exports.generateFeed = generateFeed
 
 function generateFeed({info, items}, {programId, mediaType}) {
+    // return console.log(JSON.stringify(items,null,4))
+
+    let customPodcastAlbum = podcastConf.programs[programId].album[mediaType]
+    if (customPodcastAlbum) {
+        info.headPic = customPodcastAlbum
+    }
+
     return promisify(fs.readFile)(path.resolve(__dirname, 'tpl/feed.xml'), 'utf8').then(function (tplContent) {
         let content = etpl.compile(tplContent)({
             programId,
             mediaType,
             feedUrl: `${podcastConf.feedBaseUrl}/${mediaType}/${programId}.xml`,
-            year: (new Date()).getYear(),
+            year: (new Date()).getFullYear(),
             info,
             items: itemsAdapter(items, mediaType)
         })

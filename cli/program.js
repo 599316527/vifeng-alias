@@ -23,8 +23,7 @@ function update(params, options) {
             programModel.saveProgramItems(bodyList)
         ])
     }).then(function ([weMedia, infoResult, listResult]) {
-        console.log('节目«%s»已更新 (新增%d个, 修改%d个)',
-            weMedia.name, listResult.upsertedCount, listResult.modifiedCount)
+        console.log('节目«%s»已更新', weMedia.name)
     })
 }
 
@@ -54,6 +53,8 @@ function podcast(params, options) {
                 programId
             }
         )
+    }).then(function () {
+        console.log(`${programId}-${options.mediaType}) 已更新`)
     })
 }
 
