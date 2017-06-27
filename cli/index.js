@@ -11,17 +11,11 @@ let action = argv._[0]
 
 function main() {
     let shouldConnectDb = actionsWhichNeedDbConnection.indexOf(action) >= 0
-    return !shouldConnectDb ? Promise.resolve() : new Promise(function (resolve, reject) {
+    if (shouldConnectDb) {
         let connectionUrl = getMongodbConnectionUrl(mongoConf)
-        MongoClient.connect(connectionUrl, function(err, db) {
-            if (err) {
-                reject(err.message)
-                return
-            }
-
-            resolve(db)
-        });
-    })
+        return MongoClient.connect(connectionUrl)
+    }
+    return Promise.resolve()
 }
 
 main().then(function (db) {

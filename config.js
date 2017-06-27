@@ -53,3 +53,7 @@ exports.podcast = {
         }
     }
 }
+
+exports.webapp = {
+    pageCount: 20
+}

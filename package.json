@@ -4,12 +4,14 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
+    "webapp": "node app/web/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Kyle <ohyes@hk1229.cn>",
   "license": "LGPL",
   "dependencies": {
     "etpl": "^3.2.0",
+    "express": "^4.15.3",
     "minimist": "^1.2.0",
     "mongodb": "^2.2.29",
     "node-fetch": "^1.7.1"
