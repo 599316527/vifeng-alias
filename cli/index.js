@@ -40,7 +40,7 @@ main().then(function (db) {
     }
 
     function promiseErrorCatcher({name, type, message, stack}) {
-        console.log(`[${name}:${type}] ${message}
+        console.log(`[${name}] ${message}
     ${stack}`)
         process.exit(1)
     }
