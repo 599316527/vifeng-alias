@@ -64,16 +64,7 @@ function itemsAdapter(items, mediaType) {
 }
 
 function convDate(source) {
-    if (!/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/.test(source)) {
-        return source;
-    }
-    var d = new Date();
-    d.setUTCFullYear(parseInt(RegExp.$1, 10));
-    d.setUTCMonth(parseInt(RegExp.$2, 10) - 1);
-    d.setUTCDate(parseInt(RegExp.$3, 10));
-    d.setUTCHours(parseInt(RegExp.$4, 10));
-    d.setUTCMinutes(parseInt(RegExp.$5, 10));
-    d.setUTCSeconds(parseInt(RegExp.$6, 10));
+    var d = new Date(source);
     return d.toUTCString();
 }
 

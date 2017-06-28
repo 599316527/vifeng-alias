@@ -1,0 +1,10 @@
+<!-- target: programs -->
+<!-- import: page -->
+<!-- block: content -->
+<h1>節目列表</h1>
+<ul>
+<!-- for: ${programs} as ${program} -->
+<li><a href="/program/${program.programId}/1/">${program.name}</a></li>
+<!-- /for -->
+</ul>
+<!-- /block -->

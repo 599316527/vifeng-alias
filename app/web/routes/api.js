@@ -4,6 +4,30 @@ let ProgramModel = require('../../../lib/ProgramModel')
 let { vifeng: vifengConf, webapp: webappConf } = require('../../../config')
 
 
+router.get('/programs/', function (req, res, next) {
+    let programIds = Object.keys(vifengConf.programs)
+
+    return Promise.all(programIds.map(function (programId) {
+        let programModel = new ProgramModel(programId, {db: req.app.locals.mongodb})
+        return programModel.readProgramInfo()
+    })).then(function (infos) {
+        let programs = infos.map(function (info, index) {
+            return info ? {
+                name: info.name,
+                headPic: info.headPic,
+                programId: programIds[index]
+            } : null
+        }).filter(function (item) {
+            return item
+        })
+
+        res.json({
+            status: 'ok',
+            data: programs
+        })
+    })
+})
+
 router.get('/program/:programId/', function (req, res, next) {
     let programId = req.params.programId.trim()
     // console.log(programId)

@@ -1,0 +1,26 @@
+<!-- target: page -->
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>${pageTitle}</title>
+        <link rel="stylesheet" type="text/css" href="https://hk1229.cn/demo/phoenixtv/static/css/common.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div class="logo">鳳凰衛視</div>
+            </div>
+
+            <div class="content">
+                <!-- block: content -->Empty<!-- /block -->
+            </div>
+
+            <div class="footer">
+                <p>Powered by <a href="/" target="_blank">Kyle He</a></p>
+                <p><a href="https://github.com/599316527/vifeng-alias" target="_blank">Fork on Github</a></p>
+            </div>
+        </div>
+    </body>
+</html>
