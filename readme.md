@@ -35,3 +35,10 @@ ProgramFetcher.fetchProgram(programId, pageNo, pageCount).then(function (data) {
 ```
 
 ### Web服务
+
+```sh
+pushd app/web/client
+npm run build
+popd
+npm run webapp
+```

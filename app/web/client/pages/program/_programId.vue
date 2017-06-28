@@ -46,7 +46,7 @@
 
 <script>
 import axios from 'axios'
-import {getApiUrl} from '~plugins/helper'
+import {getApiUrl, apiResponseAdapter} from '~plugins/helper'
 
 export default {
   name: 'Program',
@@ -55,11 +55,20 @@ export default {
     return Promise.all([
       axios.get(getApiUrl(`/api/program/${programId}/`, context)),
       axios.get(getApiUrl(`/api/program/items/${programId}/1/`, context))
-    ]).then(function ([info, items]) {
-      return {
-        info: info.data.data,
-        items: items.data.data
-      }
+    ]).then(function (results) {
+      let [info, items] = results.map(function (result) {
+        let data = apiResponseAdapter(result)
+        if (data instanceof Error) {
+          throw data
+        }
+        return data
+      })
+      return { info, items }
+    }).catch((err) => {
+      context.error({
+        statusCode: 404,
+        message: err.message
+      })
     })
   },
   computed: {
@@ -171,6 +180,7 @@ function formatProgramNo(source) {
   font-size: 12px;
   background: #ED802F;
   color: white;
+  margin-right: 1em;
   padding: 2px 5px;
 }
 .episode .subtitle {

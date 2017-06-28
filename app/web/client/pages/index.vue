@@ -19,14 +19,24 @@
 
 <script>
 import axios from 'axios'
-import {getApiUrl} from '~plugins/helper'
+import {getApiUrl, apiResponseAdapter} from '~plugins/helper'
 
 export default {
   name: 'Programs',
   asyncData (context) {
     return axios.get(getApiUrl('/api/programs/', context))
       .then((res) => {
-        return { programs: res.data.data }
+        let data = apiResponseAdapter(res)
+        if (data instanceof Error) {
+          throw data
+        }
+        return { programs: data }
+      })
+      .catch((err) => {
+        context.error({
+          statusCode: 404,
+          message: err.message
+        })
       })
   }
 }

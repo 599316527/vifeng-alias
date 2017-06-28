@@ -26,7 +26,9 @@ app.use(function (err, req, res, next) {
 let connectionUrl = getMongodbConnectionUrl(mongoConf)
 MongoClient.connect(connectionUrl).then(function (db) {
     app.locals.mongodb = db
-    app.listen(process.env.PORT || 8004)
+    let port = process.env.PORT || 8004
+    app.listen(port)
+    console.log('Server is listening on ' + port)
 })
 
 module.exports = app
