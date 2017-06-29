@@ -54,7 +54,7 @@ function podcast(params, options) {
             }
         )
     }).then(function () {
-        console.log(`${programId}-${options.mediaType}) 已更新`)
+        console.log(`${programId}-${options.mediaType} 已更新`)
     })
 }
 
