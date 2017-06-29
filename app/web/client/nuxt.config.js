@@ -13,8 +13,13 @@ module.exports = {
   head: {
     title: 'vifeng Alias',
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      {
+        charset: 'utf-8'
+      },
+      {
+        name: 'viewport',
+        content: 'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1'
+      }
     ],
     link: []
   },
@@ -28,7 +33,7 @@ module.exports = {
   modules: [
     ['@nuxtjs/proxy', {
       proxy: {
-          '/api': apiBaseUrl
+          '/vifeng/api': apiBaseUrl
       }
     }]
   ],

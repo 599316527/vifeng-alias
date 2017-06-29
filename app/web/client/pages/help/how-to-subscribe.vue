@@ -26,11 +26,17 @@
   <h2 class="lowdash">锵锵三人行</h2>
   <div class="program">
     <div class="album">
-      <img src="https://hk1229.cn/demo/phoenixtv/help/how-to-subscribe/57ee2ee9cea8e82ace69ee78f8d93eda.png" />
+      <img src="../../assets/57ee2ee9cea8e82ace69ee78f8d93eda.png" />
     </div>
     <ul class="urls">
-      <li class="video"><span>视频版</span><samp>https://qcdn.adeline.cc/vifeng/podcast/video/qqsrx.xml</samp></li>
-      <li class="audio"><span>音频版</span><samp>https://qcdn.adeline.cc/vifeng/podcast/video/qqsrx.xml</samp></li>
+      <li class="video">
+        <span>视频版</span>
+        <a @click.prevent @mousedown="handlePodcastUrlClick">https://qcdn.adeline.cc/vifeng/podcast/video/qqsrx.xml</a>
+      </li>
+      <li class="audio">
+        <span>音频版</span>
+        <a @click.prevent @mousedown="handlePodcastUrlClick">https://qcdn.adeline.cc/vifeng/podcast/audio/qqsrx.xml</a>
+      </li>
     </ul>
   </div>
 
@@ -44,7 +50,7 @@
 
     <dt>为什么在 iTunes 中搜不到？</dt>
     <dd>被 Apple 下架了。
-      <a class="btn btn-link btn-sm" target="_blank" href="https://hk1229.cn/demo/phoenixtv/help/how-to-subscribe/4570ede8275af238cbfc8d22ac4a7b03.jpg">
+      <a class="btn btn-link btn-sm" target="_blank" href="../../assets/4570ede8275af238cbfc8d22ac4a7b03.jpg">
       查看邮件截图</a></dd>
   </dl>
 </div>
@@ -57,6 +63,11 @@ export default {
     return {
       hideCopyTip: false
     }
+  },
+  methods: {
+    handlePodcastUrlClick({target}) {
+      target.href = target.innerText
+    }
   }
 }
 </script>
@@ -64,16 +75,18 @@ export default {
 <style>
 .help {
   font-size: 14px;
-  margin: 0 4em;
 }
 .help a {
   color: #ED802F;
   text-decoration: none;
 }
 .help h2 {
-  margin-top: 2.8em;
+  margin: 2.8em 0 1.2em;
   font-size: 20px;
   text-align: center;
+}
+.help h2:first-child {
+  margin-top: 1.2em;
 }
 .help code {
   padding: 2px 4px;
@@ -215,9 +228,6 @@ export default {
 }
 
 @media (max-width: 650px) {
-  .help {
-    margin: 0 .5em;
-  }
   .help .program .urls {
     text-align: center;
     line-height: 1.5;

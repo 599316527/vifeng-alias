@@ -23,6 +23,6 @@ router.get('/podcast/:mediaType/:programId.xml', function (req, res, next) {
 })
 
 let nuxt = require('../client/entry-express')
-router.get('*', nuxt.render)
+router.use(nuxt.render)
 
 module.exports = router

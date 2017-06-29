@@ -1,11 +1,15 @@
 <template>
-  <div id="app">
-    <div class="header">
+  <div id="app" :style="{
+    'padding-top': scrollTop > 0 ? headerHeight + 'px' : null
+  }">
+    <div class="header" :class="{ fixed: scrollTop > 0 }" ref="header">
+      <div class="title">
+        <router-link :to="{ name: 'index' }">VifengAlias</router-link>
+      </div>
       <ul>
-        <li><router-link :to="{ name: 'index' }">🏠</router-link></li>
-        <li><router-link :to="{ name: 'help-how-to-subscribe' }">❓</router-link></li>
+        <li><router-link :to="{ name: 'help-how-to-subscribe' }">㉄</router-link></li>
+        <li><img src="../assets/phoenix_logo.svg"></li>
       </ul>
-      <h1>Vifeng Alias</h1>
     </div>
     <div>
       <nuxt/>
@@ -18,11 +22,35 @@
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      scrollTop: 0,
+      headerHeight: 0
+    }
+  },
+  mounted() {
+    this.scrollTop = document.body.scrollTop
+    this.headerHeight = this.$refs.header.getBoundingClientRect().height
+
+    window.addEventListener('scroll', () => {
+      this.scrollTop = document.body.scrollTop
+    })
+  }
+}
+</script>
+
 <style>
+body {
+  margin: 10px;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0 4em;
 }
 
 h1 {
@@ -37,16 +65,29 @@ h2 {
 }
 
 .header {
-  padding-right: 30px;
-  background: url(../assets/phoenix_logo.svg) no-repeat center right / 20px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.2);
+}
+.header.fixed {
+  padding: 10px calc(4em + 10px) 5px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 999;
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  background-color: rgba(255, 255, 255, 0.7)
 }
 .header ul {
   margin: 0;
   padding: 0;
   list-style: none;
-  float: right;
   font-size: 20px;
-  margin-top: -1px;
 }
 .header li {
   float: left;
@@ -55,6 +96,15 @@ h2 {
 .header a {
   color: #ED802F;
   text-decoration: none;
+}
+.header .title a {
+  color: #333;
+  font-weight: bolder;
+}
+.header li img {
+  width: 1em;
+  display: block;
+  margin-top: 3px;
 }
 
 .footer {
@@ -84,5 +134,14 @@ h2 {
   margin-left: -22px;
   width: 44px;
   border-top: 1px solid #aaa;
+}
+
+@media (max-width: 650px) {
+  #app {
+    margin: 0 .5em;
+  }
+  .header.fixed {
+    padding: 10px calc(.5em + 10px) 5px;
+  }
 }
 </style>
