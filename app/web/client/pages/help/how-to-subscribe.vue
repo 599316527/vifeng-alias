@@ -216,7 +216,7 @@ export default {
 
 @media (max-width: 650px) {
   .help {
-    margin: 0 1em;
+    margin: 0 .5em;
   }
   .help .program .urls {
     text-align: center;
@@ -225,7 +225,6 @@ export default {
   .help .program .urls samp {
     display: block;
     font-size: 14px;
-    margin: 0 1em;
   }
   .help .program .urls span {
     margin: 1.5em 0 .5em;

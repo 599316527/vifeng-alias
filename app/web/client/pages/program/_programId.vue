@@ -213,6 +213,9 @@ function formatProgramNo(source) {
   padding: 2px 6px 2px 1.8em;
   background: no-repeat 6px center /auto 80%;
 }
+.episode .files a:last-child {
+  margin-right: 0;
+}
 .episode .files .mp41M {
   padding-left: 2em;
   background-position: 8px center;
