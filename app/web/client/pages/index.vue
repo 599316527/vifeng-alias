@@ -43,6 +43,10 @@ export default {
 </script>
 
 <style>
+.programs {
+  margin-top: 2em;
+}
+
 .programs h2 {
   text-align: center;
 }
