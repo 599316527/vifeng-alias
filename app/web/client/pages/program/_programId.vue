@@ -222,6 +222,7 @@ function formatProgramNo(source) {
   background-image: url(../../assets/airpods.png);
 }
 .episode .files small {
+  margin-left: 4px;
   font-size: 12px;
   color: #999;
 }
@@ -230,6 +231,8 @@ function formatProgramNo(source) {
 @media (max-width: 560px) {
   .episode {
     display: block;
+    position: relative;
+    padding-top: 30px;
   }
   .episode .album {
     margin-bottom: .5em;
@@ -237,6 +240,12 @@ function formatProgramNo(source) {
   }
   .episode .title {
     text-align: center;
+  }
+  .episode .program-no {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
   }
   .episode .desc {
     margin-left: 0;
