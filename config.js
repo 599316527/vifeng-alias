@@ -43,7 +43,7 @@ exports.vifeng = {
 }
 
 exports.podcast = {
-    feedBaseUrl: 'https://hk1229.cn/vifeng/podcast/',
+    feedBaseUrl: 'https://hk1229.cn/vifeng/podcast',
     programs: {
         qqsrx: {
             album: {

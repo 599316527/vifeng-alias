@@ -1,6 +1,10 @@
 <template>
   <div id="app">
     <div class="header">
+      <ul>
+        <li><router-link :to="{ name: 'index' }">🏠</router-link></li>
+        <li><router-link :to="{ name: 'help-how-to-subscribe' }">❓</router-link></li>
+      </ul>
       <h1>Vifeng Alias</h1>
     </div>
     <div>
@@ -33,7 +37,24 @@ h2 {
 }
 
 .header {
-  background: url(../assets/phoenix_logo.svg) no-repeat top right / 20px auto;
+  padding-right: 30px;
+  background: url(../assets/phoenix_logo.svg) no-repeat center right / 20px auto;
+}
+.header ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  float: right;
+  font-size: 20px;
+  margin-top: -1px;
+}
+.header li {
+  float: left;
+  margin-left: 10px;
+}
+.header a {
+  color: #ED802F;
+  text-decoration: none;
 }
 
 .footer {

@@ -29,7 +29,7 @@
             <span class="program-date">{{ item.createDate }}</span>
           </div>
           <div class="files">
-            <a v-for="(file, i) in item.videos" :class="file.useType" :href="file.mediaUrl" target="blank">
+            <a v-for="(file, i) in item.videos" :class="file.useType" :href="file.mediaUrl" target="_blank">
                 <span>{{ ({
                   'mp41M': '视频',
                   'mp3': '音频'
