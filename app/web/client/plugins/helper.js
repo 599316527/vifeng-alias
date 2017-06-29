@@ -1,6 +1,9 @@
+let path = require('path')
+
+let {router} = require('../nuxt.config')
 
 export function getApiUrl(url, {isServer}) {
-  return (isServer ? process.env.apiBaseUrl : '') + url
+  return (isServer ? process.env.apiBaseUrl : '') + path.join(router.base, url)
 }
 
 export function apiResponseAdapter({data}) {

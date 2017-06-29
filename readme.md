@@ -38,6 +38,7 @@ ProgramFetcher.fetchProgram(programId, pageNo, pageCount).then(function (data) {
 
 ```sh
 pushd app/web/client
+npm install
 npm run build
 popd
 npm run webapp

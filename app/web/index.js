@@ -1,14 +1,17 @@
 let MongoClient = require('mongodb').MongoClient
 
+let path = require('path')
 let express = require('express')
 
 let getMongodbConnectionUrl = require('../../lib/UrlBuilder').getMongodbConnectionUrl
-let { mongo: mongoConf } = require('../../config')
+let { mongo: mongoConf, webapp: webappConf } = require('../../config')
+
+let webAppBaseUrl = webappConf.baseUrl
 
 let app = express()
 
-app.use('/api', require('./routes/api'))
-app.use('/', require('./routes/page'))
+app.use(path.join(webAppBaseUrl, '/api'), require('./routes/api'))
+app.use(path.join(webAppBaseUrl, '/'), require('./routes/page'))
 
 app.use(function (req, res, next) {
     let err = new Error()

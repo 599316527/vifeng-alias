@@ -55,5 +55,6 @@ exports.podcast = {
 }
 
 exports.webapp = {
-    pageCount: 20
+    pageCount: 20,
+    baseUrl: '/vifeng'
 }
