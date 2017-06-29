@@ -242,6 +242,7 @@ function formatProgramNo(source) {
     text-align: center;
   }
   .episode .program-no {
+    margin-right: 0;
     position: absolute;
     top: 0;
     left: 50%;

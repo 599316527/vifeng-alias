@@ -6,7 +6,7 @@ let express = require('express')
 let router = express.Router()
 
 let podcastFeedXmlDir = path.resolve(__dirname, '../../podcast/dist')
-router.get('/podcast/:mediaType/:programId', function (req, res, next) {
+router.get('/podcast/:mediaType/:programId.xml', function (req, res, next) {
     let {programId, mediaType} = req.params
     let filename = `${programId}-${mediaType}.xml`
     let file = path.join(podcastFeedXmlDir, filename)
