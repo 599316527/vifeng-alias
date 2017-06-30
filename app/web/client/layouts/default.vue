@@ -2,13 +2,16 @@
   <div id="app" :style="{
     'padding-top': scrollTop > 0 ? headerHeight + 'px' : null
   }">
-    <div class="header" :class="{ fixed: scrollTop > 0 }" ref="header">
+    <div class="header" :class="{
+      fixed: scrollTop > 0,
+      'scroll-up': scrollTop > 400
+    }" ref="header">
       <div class="title">
         <router-link :to="{ name: 'index' }">VifengAlias</router-link>
       </div>
       <ul>
         <li><router-link :to="{ name: 'help-how-to-subscribe' }">㉄</router-link></li>
-        <li><img src="../assets/phoenix_logo.svg"></li>
+        <li class="logo"><div @click="scrollToTop"></div></li>
       </ul>
     </div>
     <div>
@@ -30,6 +33,33 @@ export default {
       headerHeight: 0
     }
   },
+  methods: {
+    scrollToTop() {
+      let start
+      let startScrollTop = this.scrollTop
+      let targetScrollTop = 0
+      let duration = Math.abs(targetScrollTop - startScrollTop) * .8
+
+      if (duration) {
+        window.requestAnimationFrame(scroll)
+      }
+
+      function scroll(timestamp) {
+        if (!start) {
+          start = timestamp
+        }
+
+        let progress = Math.min(100, (timestamp - start) / duration)
+        progress = inOutCube(progress)
+        let scrollTop = startScrollTop + (targetScrollTop - startScrollTop) * progress
+        window.scrollTo(0, scrollTop)
+
+        if (progress < 1) {
+          window.requestAnimationFrame(scroll)
+        }
+      }
+    }
+  },
   mounted() {
     this.scrollTop = document.body.scrollTop
     this.headerHeight = this.$refs.header.getBoundingClientRect().height
@@ -38,6 +68,12 @@ export default {
       this.scrollTop = document.body.scrollTop
     })
   }
+}
+
+function inOutCube(n){
+  n *= 2;
+  if (n < 1) return 0.5 * n * n * n;
+  return 0.5 * ((n -= 2 ) * n * n + 2);
 }
 </script>
 
@@ -81,7 +117,8 @@ h2 {
   z-index: 999;
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
-  background-color: rgba(255, 255, 255, 0.7)
+  background-color: rgba(255, 255, 255, 0.7);
+  border-bottom-color: rgba(51, 51, 51, 0.1);
 }
 .header ul {
   margin: 0;
@@ -91,7 +128,7 @@ h2 {
 }
 .header li {
   float: left;
-  margin-left: 10px;
+  margin-left: 12px;
 }
 .header a {
   color: #ED802F;
@@ -101,10 +138,23 @@ h2 {
   color: #333;
   font-weight: bolder;
 }
-.header li img {
-  width: 1em;
-  display: block;
+.header .logo {
   margin-top: 3px;
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
+}
+.header .logo div {
+  width: 1em;
+  height: 2.5em;
+  display: block;
+  background: url(../assets/phoenix_logo.svg) no-repeat 0 0 / 100% auto,
+    url(../assets/scroll-up.png) no-repeat 0 bottom / 100% auto;
+  transform: translate(0);
+  transition: transform 600ms cubic-bezier(.42,.26,.43,1.32);
+}
+.header.scroll-up .logo div {
+  transform: translate(0, -60%);
 }
 
 .footer {

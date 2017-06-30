@@ -10,7 +10,8 @@
   <div class="copy-tip alert alert-info" v-if="!hideCopyTip">
     <button type="button" class="close" @click="hideCopyTip = true"><span>&times;</span></button>
     <small><strong>提示</strong>
-      下面这段是从 IPN 播客网络哪儿抄来的。为什么不直接链接过去？1. 因为“如何...”这节的标题没有设置 Anchor，链接过去没法定位这一节； 2. 我也想修改下内容。</small>
+      下面这段是从 IPN 播客网络哪儿抄来的。为什么不直接链接过去？
+      1. 因为“如何...”这节的标题没有设置 Anchor，链接过去没法定位这一节； 2. 我也想修改下内容。</small>
   </div>
 
   <blockquote>
@@ -31,11 +32,13 @@
     <ul class="urls">
       <li class="video">
         <span>视频版</span>
-        <a @click.prevent @mousedown="handlePodcastUrlClick">https://qcdn.adeline.cc/vifeng/podcast/video/qqsrx.xml</a>
+        <a @click.prevent href="https://qcdn.adeline.cc/vifeng/podcast/video/qqsrx.xml">
+          https://qcdn.adeline.cc/vifeng/podcast/video/qqsrx.xml</a>
       </li>
       <li class="audio">
         <span>音频版</span>
-        <a @click.prevent @mousedown="handlePodcastUrlClick">https://qcdn.adeline.cc/vifeng/podcast/audio/qqsrx.xml</a>
+        <a @click.prevent href="https://qcdn.adeline.cc/vifeng/podcast/audio/qqsrx.xml">
+          https://qcdn.adeline.cc/vifeng/podcast/audio/qqsrx.xml</a>
       </li>
     </ul>
   </div>
@@ -49,9 +52,7 @@
     <dd>数据定时从凤凰视频和凤凰FM抓取，数据源更新不及时是主要原因。其次，抓取频率和CDN缓存也可能引起更新延误。</dd>
 
     <dt>为什么在 iTunes 中搜不到？</dt>
-    <dd>被 Apple 下架了。
-      <a class="btn btn-link btn-sm" target="_blank" href="../../assets/4570ede8275af238cbfc8d22ac4a7b03.jpg">
-      查看邮件截图</a></dd>
+    <dd>被 Apple 反复下架了。</dd>
   </dl>
 </div>
 </template>
@@ -65,9 +66,7 @@ export default {
     }
   },
   methods: {
-    handlePodcastUrlClick({target}) {
-      target.href = target.innerText
-    }
+
   }
 }
 </script>
@@ -75,6 +74,7 @@ export default {
 <style>
 .help {
   font-size: 14px;
+  margin-bottom: 2em;
 }
 .help a {
   color: #ED802F;
@@ -86,7 +86,7 @@ export default {
   text-align: center;
 }
 .help h2:first-child {
-  margin-top: 1.2em;
+  margin-top: 1.4em;
 }
 .help code {
   padding: 2px 4px;
@@ -157,10 +157,12 @@ export default {
   margin: 0 0 20px;
   font-size: 14px;
   border-left: 5px solid #eee;
-  line-height: 2;
 }
 .help blockquote p {
-  margin: 4px 0;
+  margin: 10px 0;
+}
+.help blockquote a {
+  border-bottom: 1px solid;
 }
 .help blockquote .btn {
   padding: 2px 6px !important;
