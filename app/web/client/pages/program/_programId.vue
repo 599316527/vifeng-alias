@@ -221,10 +221,10 @@ export default {
 .episode .files .mp41M {
   padding-left: 2em;
   background-position: 8px center;
-  background-image: url(../../assets/tv.png);
+  background-image: url(../../assets/tv.svg);
 }
 .episode .files .mp3 {
-  background-image: url(../../assets/airpods.png);
+  background-image: url(../../assets/airpods.svg);
 }
 .episode .files small {
   margin-left: 4px;

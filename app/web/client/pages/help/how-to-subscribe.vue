@@ -205,10 +205,10 @@ export default {
   border-right: 1px dotted #999;
 }
 .help .program .urls .video span {
-  background-image: url(../../assets/tv.png);
+  background-image: url(../../assets/tv.svg);
 }
 .help .program .urls .audio span {
-  background-image: url(../../assets/airpods.png);
+  background-image: url(../../assets/airpods.svg);
 }
 .help .program .urls samp {
   font-family: Menlo,Monaco,Consolas,"Courier New",monospace;

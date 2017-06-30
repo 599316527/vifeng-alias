@@ -1,7 +1,14 @@
 
 <template>
 <div class="media">
-  <h2 class="program-name lowdash">{{ program.name }}</h2>
+  <h2 class="program-name lowdash">
+    <router-link :to="{
+      name: 'program-programId',
+      params: {
+        programId: program.programId
+      }
+    }">{{ program.name }}</router-link>
+  </h2>
 
   <div class="title">
     <div class="program-no">{{ programNo }}</div>
@@ -11,8 +18,8 @@
     <player v-if="video" :src="video.mediaUrl" :poster="album" :media-type="mediaType" />
     <div class="empty" v-else>no video</div>
   </div>
-  <div class="desc">
-    <span class="program-desc">{{ desc }}</span>
+  <div class="desc">{{ desc }}</div>
+  <div class="author">
     <span class="program-author">{{ author }}</span>
     <span class="dot">·</span>
     <span class="program-date">{{ createDate }}</span>
@@ -69,11 +76,16 @@ function asyncDataAdapater(data) {
 
 <style>
 .media {
-  margin: 1em 0 2em;
+  margin: 2em 0;
+}
+
+.media .program-name a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .media .title {
-  margin-top: 1.9em;
+  margin-top: 1.5em;
   color: #333;
   text-align: center;
 }
@@ -97,21 +109,19 @@ function asyncDataAdapater(data) {
 }
 
 .media .desc {
-  margin-top: 2em;
+  margin-top: 1em;
   text-align: justify;
   font-size: 14px;
 }
-.media .desc .dot {
+.media .author {
+  margin-top: .6em;
+  color: #999;
+  font-size: .75em;
+}
+.media .author .dot {
   font-weight: bolder;
   margin: 0 3px;
-}
-.media .desc .program-author {
-  margin-left: 8px;
-  color: #999;
-  font-size: .8em;
-}
-.media .desc .program-date {
-  color: #999;
-  font-size: .8em;
+  font-size: 14px;
+  color: #666;
 }
 </style>

@@ -149,7 +149,7 @@ h2 {
   height: 2.5em;
   display: block;
   background: url(../assets/phoenix_logo.svg) no-repeat 0 0 / 100% auto,
-    url(../assets/scroll-up.png) no-repeat 0 bottom / 100% auto;
+    url(../assets/scroll-up.svg) no-repeat 0 bottom / 100% auto;
   transform: translate(0);
   transition: transform 600ms cubic-bezier(.42,.26,.43,1.32);
 }

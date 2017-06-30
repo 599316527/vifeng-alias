@@ -15,7 +15,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .video-player {
   position: relative;
   padding-top: 56.25%;
