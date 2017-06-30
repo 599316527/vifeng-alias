@@ -12,7 +12,7 @@
   <div class="episodes">
     <h3 class="lowdash">剧集列表</h3>
     <ul>
-      <li class="episode" v-for="(item, index) in items">
+      <li class="episode" v-for="(item, index) in items" :key="item.itemId">
         <div class="album">
           <div class="pic" :style="{'background-image': `url(${item.album})`}">
             <span class="duration">{{ cItems[index].duration }}</span>
@@ -30,13 +30,20 @@
             <span class="program-date">{{ item.createDate }}</span>
           </div>
           <div class="files">
-            <a v-for="(file, i) in item.videos" :class="file.useType" :href="file.mediaUrl" target="_blank">
+            <router-link v-for="(file, i) in item.videos" :class="file.useType" :to="{
+              name: 'program-media-programId-mediaType-itemId',
+              params: {
+                programId: info.programId,
+                mediaType: file.useType,
+                itemId: item.itemId
+              }
+            }" :key="i">
                 <span>{{ ({
                   'mp41M': '视频',
                   'mp3': '音频'
                 }[file.useType]) }}</span>
                 <small>{{ cItems[index].videos[i].filesize }}</small>
-            </a>
+            </router-link>
           </div>
         </div>
       </li>
@@ -47,7 +54,10 @@
 
 <script>
 import axios from 'axios'
-import {getApiUrl, apiResponseAdapter} from '~plugins/helper'
+import {
+  getApiUrl, apiResponseAdapter,
+  formatDuration, formatFileSize, formatProgramNo
+} from '~plugins/helper'
 
 export default {
   name: 'Program',
@@ -90,22 +100,6 @@ export default {
   validate ({ params }) {
     return !!params.programId
   }
-}
-
-function formatDuration(duration) {
-  // TODO: support hours
-  let m = ~~(duration / 60)
-  let s = duration % 60
-  return `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`
-}
-
-function formatFileSize(filesize) {
-  // TODO: support more units
-  return `${(filesize / 1024).toFixed(2)}M`
-}
-
-function formatProgramNo(source) {
-  return `${source.substring(0, 4)}年${source.substring(4, 6)}月${source.substring(6, 8)}日`
 }
 </script>
 
@@ -216,7 +210,7 @@ function formatProgramNo(source) {
   color: #333;
   text-decoration: none;
   margin-right: 2em;
-
+  user-select: none;
   border: 1px solid #666;
   padding: 2px 6px 2px 1.8em;
   background: no-repeat 6px center /auto 80%;

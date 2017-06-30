@@ -3,6 +3,7 @@ let router = express.Router()
 let ProgramModel = require('../../../lib/ProgramModel')
 let { vifeng: vifengConf, webapp: webappConf } = require('../../../config')
 
+let allowTypes = ['mp41M', 'mp3']
 
 router.get('/programs/', function (req, res, next) {
     let programIds = Object.keys(vifengConf.programs)
@@ -49,7 +50,7 @@ router.get('/program/:programId/', function (req, res, next) {
         }
         res.json({
             status: 'ok',
-            data
+            data: programInfoDataAdapter(data)
         })
     })
 })
@@ -67,40 +68,71 @@ router.get('/program/items/:programId/:pageNo/', function (req, res, next) {
     programModel.readProgramItems(pageNo, webappConf.pageCount).then(function (data) {
         res.json({
             status: 'ok',
-            data: programItemsDataAdapter(data)
+            data: data.map(programItemDataAdapter).map(function (item) {
+                item.videos = item.videos.map(function (video) {
+                    video.mediaUrl = undefined
+                    return video
+                })
+                return item
+            })
+        })
+    })
+})
+
+router.get('/program/item/:programId/:itemId/', function (req, res, next) {
+    let {programId, itemId} = req.params
+    let program = vifengConf.programs[programId]
+    if (!program) {
+        res.sendStatus(404)
+        return
+    }
+
+    let programModel = new ProgramModel(programId, {db: req.app.locals.mongodb})
+    Promise.all([
+        programModel.readProgramInfo(),
+        programModel.readProgramItem(itemId)
+    ]).then(function ([program, itemData]) {
+        res.json({
+            status: 'ok',
+            data: Object.assign(programItemDataAdapter(itemData), {
+                program: programInfoDataAdapter(program)
+            })
         })
     })
 })
 
 module.exports = router
 
-function programItemsDataAdapter(data) {
-    let allowTypes = ['mp41M', 'mp3']
-    return data.map(function (item) {
-        let member = item.memberItem
-        let videos = member.videoFiles.filter(function (file) {
-            return allowTypes.indexOf(file.useType) >= 0
-        }).map(function (file) {
-            return {
-                mediaUrl: file.mediaUrl,
-                useType: file.useType,
-                filesize: file.filesize,
-            }
-        })
-
-        return {
-            _id: item.id,
-            title: item.title,
-            desc: item.abstractDesc,
-            author: member.cpName,
-            album: item.imageList[0].image,
-            createDate: member.createDate,
-            updateDate: member.updateDate,
-            duration: member.duration,
-            programNo: member.programNo,
-            videos
-        }
+function programInfoDataAdapter(item) {
+    ['_id', 'weMediaID', 'followNo', 'followed', 'totalNum', 'totalPage'].forEach(function (key) {
+        item[key] = undefined
     })
+    return item
 }
 
+function programItemDataAdapter(item) {
+    let member = item.memberItem
+    let videos = member.videoFiles.filter(function (file) {
+        return allowTypes.indexOf(file.useType) >= 0
+    }).map(function (file) {
+        return {
+            mediaUrl: file.mediaUrl,
+            useType: file.useType,
+            filesize: file.filesize,
+        }
+    })
 
+    return {
+        _id: item.id,
+        title: item.title,
+        desc: item.abstractDesc,
+        author: member.cpName,
+        itemId: item.itemId,
+        album: item.imageList[0].image,
+        createDate: member.createDate,
+        updateDate: member.updateDate,
+        duration: member.duration,
+        programNo: member.programNo,
+        videos
+    }
+}
