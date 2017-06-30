@@ -36,10 +36,7 @@ router.get('/program/:programId/', function (req, res, next) {
     let program = vifengConf.programs[programId]
     // console.log(programId)
     if (!program) {
-        res.json({
-            status: 'fail',
-            message: 'not found'
-        })
+        next('route')
         return
     }
 
@@ -55,22 +52,24 @@ router.get('/program/:programId/', function (req, res, next) {
     })
 })
 
-router.get('/program/items/:programId/:pageNo/', function (req, res, next) {
+router.get('/program/items/:programId/', function (req, res, next) {
     let programId = req.params.programId.trim()
     if (!vifengConf.programs[programId]) {
-        res.sendStatus(404)
+        next('route')
         return
     }
 
-    let pageNo = parseInt(req.params.pageNo, 10) || 1
+    let {pageNo, pageSize} = req.query
+    pageNo = parseInt(pageNo, 10) || 1
+    pageSize = parseInt(pageSize, 10) || webappConf.pageCount
 
     let programModel = new ProgramModel(programId, {db: req.app.locals.mongodb})
-    programModel.readProgramItems(pageNo, webappConf.pageCount).then(function (data) {
+    programModel.readProgramItems(pageNo, pageSize).then(function (data) {
         res.json({
             status: 'ok',
             data: data.map(programItemDataAdapter).map(function (item) {
                 item.videos = item.videos.map(function (video) {
-                    video.mediaUrl = undefined
+                    video.mediaUrl = ''
                     return video
                 })
                 return item
@@ -83,7 +82,7 @@ router.get('/program/item/:programId/:itemId/', function (req, res, next) {
     let {programId, itemId} = req.params
     let program = vifengConf.programs[programId]
     if (!program) {
-        res.sendStatus(404)
+        next('route')
         return
     }
 
@@ -99,6 +98,35 @@ router.get('/program/item/:programId/:itemId/', function (req, res, next) {
             })
         })
     })
+})
+
+router.post('/program/item/:programId/', function (req, res, next) {
+    let {programId} = req.params
+    let program = vifengConf.programs[programId]
+    if (!program) {
+        next('route')
+        return
+    }
+
+    let programModel = new ProgramModel(programId, {db: req.app.locals.mongodb})
+    Promise.all([
+        programModel.readProgramInfo(),
+        programModel.readProgramItem(itemId)
+    ]).then(function ([program, itemData]) {
+        res.json({
+            status: 'ok',
+            data: Object.assign(programItemDataAdapter(itemData), {
+                program: programInfoDataAdapter(program)
+            })
+        })
+    })
+})
+
+router.use('*', function (req, res, next) {
+    res.json({
+        status: 'fail',
+        message: 'not found'
+    }).end()
 })
 
 module.exports = router

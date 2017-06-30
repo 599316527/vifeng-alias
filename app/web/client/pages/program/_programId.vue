@@ -65,7 +65,7 @@ export default {
     let programId = context.params.programId
     return Promise.all([
       axios.get(getApiUrl(`/api/program/${programId}/`, context)),
-      axios.get(getApiUrl(`/api/program/items/${programId}/1/`, context))
+      axios.get(getApiUrl(`/api/program/items/${programId}/`, context))
     ]).then(function (results) {
       let [info, items] = results.map(function (result) {
         let data = apiResponseAdapter(result)

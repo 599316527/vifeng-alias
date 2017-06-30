@@ -10,6 +10,7 @@
         <router-link :to="{ name: 'index' }">VifengAlias</router-link>
       </div>
       <ul>
+        <li><router-link class="create-icon" :to="{ name: 'program-create' }"></router-link></li>
         <li><router-link :to="{ name: 'help-how-to-subscribe' }">㉄</router-link></li>
         <li class="logo"><div @click="scrollToTop"></div></li>
       </ul>
@@ -155,6 +156,13 @@ h2 {
 }
 .header.scroll-up .logo div {
   transform: translate(0, -60%);
+}
+.header li .create-icon {
+  display: inline-block;
+  margin-top: 3px;
+  width: 1em;
+  height: 1em;
+  background: url(../assets/write.svg) no-repeat 0 0 / 100% auto;
 }
 
 .footer {
