@@ -17,7 +17,8 @@ const userAgent = 'ifengPlayer/7.4.1 (iPhone; iOS 10.3.2; Scale/2.00)'
 
 const programs = {
     qqsrx: {
-        weMediaId: 12
+        weMediaId: 12,
+        album: 'https://storage.adeline.cc/image/podcast/qqsrx/video.jpg'
     },
     yhyxt: {
         weMediaId: 104

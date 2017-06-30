@@ -1,11 +1,12 @@
 <template>
 <div class="program">
+  <h2 class="program-name lowdash">{{ info.name }}</h2>
+
   <div class="intro">
-    <div class="head-pic"><img :src="info.headPic"></div>
-    <div class="desc">
-      <h2>{{ info.name }}</h2>
-      <div>{{ info.desc }}</div>
+    <div class="head-pic">
+      <div class="pic" :style="{'background-image': `url(${info.headPic})`}"></div>
     </div>
+    <div class="desc">{{ info.desc }}</div>
   </div>
 
   <div class="episodes">
@@ -113,24 +114,31 @@ function formatProgramNo(source) {
   margin-top: 2em;
 }
 
-.program .intro {
+.program-name {
+  font-size: 22px;
+  margin: 0 0 .3em;
+  text-align: center;
+}
+
+.intro {
   display: flex;
   align-items: center;
 }
-.program .intro .head-pic img {
-  display: block;
-  width: 96px;
+.intro .head-pic {
+  width: 224px;
+  flex: 0 0 224px;
 }
-.program .intro .desc {
+.intro .head-pic .pic {
+  width: 100%;
+  padding-top: 56.25%;
+  background-size: 100% auto;
+  background-position: center;
+}
+.intro .desc {
   margin-left: 1.6em;
-}
-.program .intro .desc h2 {
-  font-size: 20px;
-  margin: 0 0 .3em;
-}
-.program .intro .desc div {
   font-size: 14px;
   color: #666;
+  text-align: justify;
 }
 .episodes {
   margin-top: 2em;
@@ -232,6 +240,20 @@ function formatProgramNo(source) {
 
 
 @media (max-width: 560px) {
+  .intro {
+    display: block;
+  }
+  .intro .head-pic {
+    width: 100%;
+  }
+  .intro .head-pic .pic {
+    padding-top: 42.86%;
+  }
+  .intro .desc {
+    margin-left: 0;
+  }
+
+
   .episode {
     display: block;
     position: relative;

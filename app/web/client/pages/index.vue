@@ -67,6 +67,8 @@ export default {
 }
 .programs .pic {
   display: block;
+  width: 200px;
+  border: 1px solid #333;
 }
 .programs .name {
   margin-top: .5em;

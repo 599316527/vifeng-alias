@@ -139,7 +139,7 @@ h2 {
   font-weight: bolder;
 }
 .header .logo {
-  margin-top: 3px;
+  padding: 3px 0;
   width: 1em;
   height: 1em;
   overflow: hidden;

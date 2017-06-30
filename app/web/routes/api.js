@@ -12,10 +12,12 @@ router.get('/programs/', function (req, res, next) {
         return programModel.readProgramInfo()
     })).then(function (infos) {
         let programs = infos.map(function (info, index) {
+            let programId = programIds[index]
+            let program = vifengConf.programs[programId]
             return info ? {
                 name: info.name,
-                headPic: info.headPic,
-                programId: programIds[index]
+                headPic: program.album || info.headPic,
+                programId
             } : null
         }).filter(function (item) {
             return item
@@ -30,8 +32,9 @@ router.get('/programs/', function (req, res, next) {
 
 router.get('/program/:programId/', function (req, res, next) {
     let programId = req.params.programId.trim()
+    let program = vifengConf.programs[programId]
     // console.log(programId)
-    if (!vifengConf.programs[programId]) {
+    if (!program) {
         res.json({
             status: 'fail',
             message: 'not found'
@@ -41,6 +44,9 @@ router.get('/program/:programId/', function (req, res, next) {
 
     let programModel = new ProgramModel(programId, {db: req.app.locals.mongodb})
     programModel.readProgramInfo().then(function (data) {
+        if (program.album) {
+            data.headPic = program.album
+        }
         res.json({
             status: 'ok',
             data
