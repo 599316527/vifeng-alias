@@ -32,13 +32,11 @@
     <ul class="urls">
       <li class="video">
         <span>视频版</span>
-        <a @click.prevent href="https://qcdn.adeline.cc/vifeng/podcast/video/qqsrx.xml">
-          https://qcdn.adeline.cc/vifeng/podcast/video/qqsrx.xml</a>
+        <a @click.prevent href="/vifeng/podcast/video/qqsrx.xml">{{ origin }}/vifeng/podcast/video/qqsrx.xml</a>
       </li>
       <li class="audio">
         <span>音频版</span>
-        <a @click.prevent href="https://qcdn.adeline.cc/vifeng/podcast/audio/qqsrx.xml">
-          https://qcdn.adeline.cc/vifeng/podcast/audio/qqsrx.xml</a>
+        <a @click.prevent href="/vifeng/podcast/audio/qqsrx.xml">{{ origin }}/vifeng/podcast/audio/qqsrx.xml</a>
       </li>
     </ul>
   </div>
@@ -46,13 +44,21 @@
   <h2 class="lowdash">常见问题</h2>
   <dl class="faq">
     <dt>如果使用 iOS 官方 Podcast 客户端订阅 URL？</dt>
-    <dd>复制上面的 URL，把开头的 <code>https</code> 改成 <code>podcast</code>，粘贴到 Safari 打开。</dd>
+    <dd>点击播客软件左上角 + 按钮，选择添加播客，在弹出的对话框中贴入地址。</dd>
 
     <dt>为什么更新不及时？</dt>
     <dd>数据定时从凤凰视频和凤凰FM抓取，数据源更新不及时是主要原因。其次，抓取频率和CDN缓存也可能引起更新延误。</dd>
 
     <dt>为什么在 iTunes 中搜不到？</dt>
     <dd>被 Apple 反复下架了。</dd>
+
+    <dt>如何支持开发者？</dt>
+    <dd>
+      <ol>
+        <li>多多给开发者的微博点赞</li>
+        <li><a href="/pay/" target="_blank">请喝杯咖啡</a></li>
+      </ol>
+    </dd>
   </dl>
 </div>
 </template>
@@ -62,11 +68,15 @@ export default {
   name: 'HelpHowToSubscribe',
   data() {
     return {
-      hideCopyTip: false
+      hideCopyTip: false,
+      origin: ''
     }
   },
   methods: {
 
+  },
+  mounted() {
+    this.origin = location.origin
   }
 }
 </script>
@@ -227,6 +237,9 @@ export default {
   font-size: 16px;
   margin: 0;
   color: #333;
+}
+.help .faq dd ol {
+  margin: 0;
 }
 
 @media (max-width: 650px) {

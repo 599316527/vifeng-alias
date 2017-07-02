@@ -21,7 +21,12 @@ module.exports = {
         content: 'width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1'
       }
     ],
-    link: []
+    link: [],
+    script: [
+      {
+        src: 'https://www.google.com/recaptcha/api.js'
+      }
+    ]
   },
   /*
   ** Customize the progress-bar color
@@ -31,12 +36,12 @@ module.exports = {
   },
 
   modules: [
-    ['@nuxtjs/proxy', {
-      proxy: {
-          '/vifeng/api': apiBaseUrl
-      }
-    }]
+    ['@nuxtjs/proxy']
   ],
+
+  proxy: {
+      '/vifeng/api': apiBaseUrl
+  },
 
   css: [
     'assets/main.css'

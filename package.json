@@ -10,10 +10,14 @@
   "author": "Kyle <ohyes@hk1229.cn>",
   "license": "AGPL-3.0",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "cross-env": "^5.0.1",
     "etpl": "^3.2.0",
     "express": "^4.15.3",
+    "form-data": "^2.2.0",
+    "guid": "0.0.12",
     "minimist": "^1.2.0",
+    "moment": "^2.18.1",
     "mongodb": "^2.2.29",
     "node-fetch": "^1.7.1"
   },

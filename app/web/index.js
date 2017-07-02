@@ -2,6 +2,7 @@ let MongoClient = require('mongodb').MongoClient
 
 let path = require('path')
 let express = require('express')
+let bodyParser = require('body-parser')
 
 let getMongodbConnectionUrl = require('../../lib/UrlBuilder').getMongodbConnectionUrl
 let { mongo: mongoConf, webapp: webappConf } = require('../../config')
@@ -9,6 +10,7 @@ let { mongo: mongoConf, webapp: webappConf } = require('../../config')
 let webAppBaseUrl = webappConf.baseUrl
 
 let app = express()
+app.use(bodyParser.json())
 
 app.use(path.join(webAppBaseUrl, '/api'), require('./routes/api'))
 app.use(path.join(webAppBaseUrl, '/'), require('./routes/page'))
@@ -20,7 +22,6 @@ app.use(function (req, res, next) {
 })
 
 app.use(function (err, req, res, next) {
-    console.log(err.stack)
     res.locals.message = err.message
     res.locals.error = err
     res.sendStatus(err.status || 500)

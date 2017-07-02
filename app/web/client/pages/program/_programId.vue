@@ -108,55 +108,55 @@ export default {
   margin-top: 2em;
 }
 
-.program-name {
+.program .program-name {
   font-size: 22px;
   margin: 0 0 .3em;
   text-align: center;
 }
 
-.intro {
+.program .intro {
   display: flex;
   align-items: center;
 }
-.intro .head-pic {
+.program .intro .head-pic {
   width: 224px;
   flex: 0 0 224px;
 }
-.intro .head-pic .pic {
+.program .intro .head-pic .pic {
   width: 100%;
   padding-top: 56.25%;
   background-size: 100% auto;
   background-position: center;
 }
-.intro .desc {
+.program .intro .desc {
   margin-left: 1.6em;
   font-size: 14px;
   color: #666;
   text-align: justify;
 }
-.episodes {
+.program .episodes {
   margin-top: 2em;
 }
-.episodes ul {
+.program .episodes ul {
   padding: 0;
   list-style: none;
 }
-.episodes h3 {
+.program .episodes h3 {
   font-weight: normal;
   text-align: center;
 }
 
-.episode {
+.program .episode {
   display: flex;
   margin: 2em 0;
   padding-bottom: 2em;
   border-bottom: 1px dotted #eee;
 }
-.episode .album {
+.program .episode .album {
   width: 224px;
   flex: 0 0 224px;
 }
-.episode .album .pic {
+.program .episode .album .pic {
   position: relative;
   width: 100%;
   padding-top: 56.25%;
@@ -164,7 +164,7 @@ export default {
   background-position: center;
   background-size: cover;
 }
-.episode .album .duration {
+.program .episode .album .duration {
   position: absolute;
   bottom: 10px;
   right: 10px;
@@ -173,11 +173,11 @@ export default {
   font-size: 14px;
   padding: 2px 4px;
 }
-.episode .desc {
+.program .episode .desc {
   margin-left: 1.6em;
   text-align: justify;
 }
-.episode .program-no {
+.program .episode .program-no {
   display: inline-block;
   font-size: 12px;
   background: #ED802F;
@@ -185,28 +185,28 @@ export default {
   margin-right: 1em;
   padding: 2px 5px;
 }
-.episode .subtitle {
+.program .episode .subtitle {
   font-size: 12px;
   margin: 8px 0;
   color: #666;
 }
-.episode .subtitle .dot {
+.program .episode .subtitle .dot {
   font-weight: bolder;
   margin: 0 3px;
 }
-.episode .subtitle .program-author {
+.program .episode .subtitle .program-author {
   margin-left: 8px;
   color: #999;
   font-size: .8em;
 }
-.episode .subtitle .program-date {
+.program .episode .subtitle .program-date {
   color: #999;
   font-size: .8em;
 }
-.episode .files {
+.program .episode .files {
   margin-top: 1em;
 }
-.episode .files a {
+.program .episode .files a {
   color: #333;
   text-decoration: none;
   margin-right: 2em;
@@ -215,18 +215,18 @@ export default {
   padding: 2px 6px 2px 1.8em;
   background: no-repeat 6px center /auto 80%;
 }
-.episode .files a:last-child {
+.program .episode .files a:last-child {
   margin-right: 0;
 }
-.episode .files .mp41M {
+.program .episode .files .mp41M {
   padding-left: 2em;
   background-position: 8px center;
   background-image: url(../../assets/tv.svg);
 }
-.episode .files .mp3 {
+.program .episode .files .mp3 {
   background-image: url(../../assets/airpods.svg);
 }
-.episode .files small {
+.program .episode .files small {
   margin-left: 4px;
   font-size: 12px;
   color: #999;
@@ -234,47 +234,47 @@ export default {
 
 
 @media (max-width: 560px) {
-  .intro {
+  .program .intro {
     display: block;
   }
-  .intro .head-pic {
+  .program .intro .head-pic {
     width: 100%;
   }
-  .intro .head-pic .pic {
+  .program .intro .head-pic .pic {
     padding-top: 42.86%;
   }
-  .intro .desc {
+  .program .intro .desc {
     margin-left: 0;
   }
 
 
-  .episode {
+  .program .episode {
     display: block;
     position: relative;
     padding-top: 30px;
   }
-  .episode .album {
+  .program .episode .album {
     margin-bottom: .5em;
     width: 100%;
   }
-  .episode .title {
+  .program .episode .title {
     text-align: center;
   }
-  .episode .program-no {
+  .program .episode .program-no {
     margin-right: 0;
     position: absolute;
     top: 0;
     left: 50%;
     transform: translate(-50%, 0);
   }
-  .episode .desc {
+  .program .episode .desc {
     margin-left: 0;
   }
-  .episode .program-title {
+  .program .episode .program-title {
     display: block;
     margin-top: 3px;
   }
-  .episode .files {
+  .program .episode .files {
     text-align: center;
   }
 }

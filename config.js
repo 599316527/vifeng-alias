@@ -57,5 +57,9 @@ exports.podcast = {
 
 exports.webapp = {
     pageCount: 20,
-    baseUrl: '/vifeng'
+    baseUrl: '/vifeng',
+    recaptcha: {
+        siteKey: '6LfuXw4UAAAAAOOZ6tbepWc4NLIRr5GakiJ-IivB',
+        secretKey: '6LfuXw4UAAAAAOS69u48Vfit6q7LKwU6rk66tovW'
+    }
 }
