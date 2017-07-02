@@ -3,7 +3,8 @@
   playing,
   'is-audio': mediaType === 'mp3',
   'is-video': mediaType !== 'mp3'
-}">
+}" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave"
+  @touchstart="handleTouchStart" @touchend="handleTouchEnd">
   <audio-player ref="aplayer" v-if="mediaType === 'mp3'" :src="src" :poster="poster"
     @playing="handleMediaPlaying" @pause="handleMediaPause" />
   <video-player ref="vplayer" v-else :src="src" :poster="poster"
@@ -13,6 +14,14 @@
   <div class="ctrl-layer" @click="handleCtrlLayerClick">
     <div v-if="!playing" class="play"></div>
     <div v-else="playing" class="pause"></div>
+  </div>
+  <div class="ctrls" :class="{
+    'show': showCtrls
+  }">
+    <div class="speed">
+      <span><small>播放速度:</small> <strong>{{ playbackRate }}X</strong></span>
+      <input type="range" min="0.5" max="2" step="0.1" v-model="playbackRate">
+    </div>
   </div>
 </div>
 </template>
@@ -42,7 +51,14 @@ export default {
   },
   data () {
     return {
-      playing: false
+      playing: false,
+      playbackRate: 1,
+      showCtrls: false
+    }
+  },
+  watch: {
+    playbackRate(val) {
+      this.changePlaybackRate(parseFloat(val))
     }
   },
   computed: {
@@ -63,12 +79,46 @@ export default {
       this.$refs.aplayer && this.$refs.aplayer.pause()
       this.$refs.vplayer && this.$refs.vplayer.pause()
     },
+    changePlaybackRate(rate) {
+      this.$refs.aplayer && this.$refs.aplayer.changePlaybackRate(rate)
+      this.$refs.vplayer && this.$refs.vplayer.changePlaybackRate(rate)
+    },
+
     handleCtrlLayerClick() {
       if (this.playing) {
         this.pause()
       }
       else {
         this.play()
+      }
+    },
+
+    handleMouseEnter() {
+      this.showCtrls = true
+    },
+    handleMouseLeave() {
+      this.showCtrls = false
+    },
+
+    handleTouchStart(evt) {
+      let {pageX, pageY} = evt.changedTouches[0]
+      if (pageX > 50) {
+        return
+      }
+      evt.preventDefault()
+      this.touchStartTime = new Date()
+      this.touchStartPos = {pageX, pageY}
+    },
+    handleTouchEnd(evt) {
+      let {pageX, pageY} = evt.changedTouches[0]
+      if (pageX > 50) {
+        return
+      }
+      let deltaTime = new Date() - this.touchStartTime
+      let deltaPageY = pageY - this.touchStartPos.pageY
+      let speed = deltaPageY / deltaTime * 1000
+      if (Math.abs(speed) > 80) {
+        this.showCtrls = speed > 0
       }
     }
   },
@@ -197,5 +247,28 @@ function replaceIdentifier(node) {
 }
 .player audio {
     z-index: 9;
+}
+.player .ctrls {
+  background: rgba(255, 255, 255, .8);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  position: absolute;
+  top: -3em;
+  left: 0;
+  right: 0;
+  padding: .6em 1em;
+  transition: top 500ms;
+}
+.player .ctrls.show {
+  top: 0;
+}
+.player .ctrls .speed {
+  display: flex;
+}
+.player .ctrls .speed span {
+  flex: 0 0 120px;
+}
+.player .ctrls .speed input {
+  flex: 1 1;
 }
 </style>

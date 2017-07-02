@@ -38,6 +38,9 @@ export default {
     },
     pause() {
       this.$refs.player.pause()
+    },
+    changePlaybackRate(rate) {
+      this.$refs.player.playbackRate = rate
     }
   }
 }
