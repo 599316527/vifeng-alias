@@ -3,7 +3,7 @@
   playing,
   'is-audio': mediaType === 'mp3',
   'is-video': mediaType !== 'mp3'
-}" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave"
+}" @mousedown="handleMouseDown" @mouseup="handleMouseUp"
   @touchstart="handleTouchStart" @touchend="handleTouchEnd">
   <audio-player ref="aplayer" v-if="mediaType === 'mp3'" :src="src" :poster="poster"
     @playing="handleMediaPlaying" @pause="handleMediaPause" />
@@ -93,25 +93,18 @@ export default {
       }
     },
 
-    handleMouseEnter() {
-      this.showCtrls = true
-    },
-    handleMouseLeave() {
-      this.showCtrls = false
-    },
-
-    handleTouchStart(evt) {
-      let {pageX, pageY} = evt.changedTouches[0]
-      if (pageX > 50) {
+    handlePointStart(point, evt) {
+      let {pageX, pageY} = point
+      if (pageX > 100) {
         return
       }
       evt.preventDefault()
       this.touchStartTime = new Date()
       this.touchStartPos = {pageX, pageY}
     },
-    handleTouchEnd(evt) {
-      let {pageX, pageY} = evt.changedTouches[0]
-      if (pageX > 50) {
+    handlePointEnd(point, evt) {
+      let {pageX, pageY} = point
+      if (pageX > 100) {
         return
       }
       let deltaTime = new Date() - this.touchStartTime
@@ -120,6 +113,18 @@ export default {
       if (Math.abs(speed) > 80) {
         this.showCtrls = speed > 0
       }
+    },
+    handleMouseDown(evt) {
+      this.handlePointStart(evt, evt)
+    },
+    handleMouseUp(evt) {
+      this.handlePointEnd(evt, evt)
+    },
+    handleTouchStart(evt) {
+      this.handlePointStart(evt.changedTouches[0], evt)
+    },
+    handleTouchEnd(evt) {
+      this.handlePointEnd(evt.changedTouches[0], evt)
     }
   },
   mounted() {
