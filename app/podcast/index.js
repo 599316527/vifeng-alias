@@ -76,6 +76,7 @@ function getMimeType(source) {
     return {
         'mp4': 'video/mp4',
         'mp3': 'audio/mp3',
+        'm4a': 'audio/m4a'
     }[source.substring(source.lastIndexOf('.') + 1)]
 }
 
