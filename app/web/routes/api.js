@@ -240,7 +240,7 @@ function programItemDataAdapter(item) {
 function fulfillProgramItemData(item) {
     let duration = parseInt(item.duration, 10)
     let guid = Guid.raw()
-    let createDate = moment().format('YY-MM-DD HH:mm:ss')
+    let createDate = moment().format('YYYY-MM-DD HH:mm:ss')
 
     let videos = {
         'mp41M': {
@@ -261,6 +261,8 @@ function fulfillProgramItemData(item) {
             spliteNo: 6,
             isSplite: 1
         }
+    }).filter(function (item) {
+        return item.mediaUrl
     })
 
     let memberItem = Object.assign({

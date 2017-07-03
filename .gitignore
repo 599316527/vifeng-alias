@@ -1,0 +1,5 @@
+app/podcast/dist
+app/web/client/.nuxt/
+app/web/client/node_modules/
+node_modules/
+npm-debug.log

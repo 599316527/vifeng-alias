@@ -42,22 +42,24 @@ function podcast(params, {
 
     let programModel = new ProgramModel(programId, { db })
 
+    let filter = {
+        'memberItem.videoFiles': {
+            $elemMatch: {
+                'useType': ({
+                    video: 'mp41M',
+                    audio: 'mp3'
+                }[mediaType])
+            }
+        }
+    }
+
     return Promise.all([
         programModel.readProgramInfo(),
-        programModel.readProgramItems({pageNo, pageCount, filter: {
-            memberItem: {
-                videoFiles: {
-                    $eachItem: {
-                        useType: {
-                            $in: ({
-                                video: ['mp41M'],
-                                audio: ['mp3']
-                            }[mediaType])
-                        }
-                    }
-                }
-            }
-        }})
+        programModel.readProgramItems({
+            pageNo,
+            pageCount,
+            filter
+        })
     ]).then(function ([info, items]) {
         return podcastApp.generateFeed(
             {info, items},
