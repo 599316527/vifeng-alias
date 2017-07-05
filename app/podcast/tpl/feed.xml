@@ -22,7 +22,7 @@
 
 <!-- for: ${items} as ${item} -->
 <item>
-    <title>${item.title}</title>
+    <title>${item.subtitle} ${item.title}</title>
     <itunes:author>${item.author}</itunes:author>
     <itunes:subtitle>${item.subtitle}</itunes:subtitle>
     <itunes:image href="${item.image}" />
