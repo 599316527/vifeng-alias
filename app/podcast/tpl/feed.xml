@@ -19,6 +19,8 @@
             <itunes:name>Kyle He</itunes:name>
             <itunes:email>ohyes@hk1229.cn</itunes:email>
         </itunes:owner>
+        <itunes:category text="Society &amp; Culture" />
+        <itunes:explicit>Yes</itunes:explicit>
 
 <!-- for: ${items} as ${item} -->
 <item>
