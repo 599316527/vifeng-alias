@@ -49,8 +49,9 @@ exports.podcast = {
         qqsrx: {
             album: {
                 video: 'https://storage.adeline.cc/image/podcast/qqsrx/video.jpg',
-                audio: 'https://storage.adeline.cc/image/podcast/qqsrx/audio.jpg'
-            }
+                audio: 'http://ww4.sinaimg.cn/large/661b7679gw1epg9c07d1rj218g18gwgt.jpg'
+            },
+            category: 'Society & Culture'
         }
     }
 }

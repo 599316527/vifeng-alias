@@ -15,7 +15,11 @@ exports.generateFeed = generateFeed
 function generateFeed({info, items}, {programId, mediaType}) {
     // return console.log(JSON.stringify(items,null,4))
 
-    let customPodcastAlbum = podcastConf.programs[programId].album[mediaType]
+    let customPodcastData = podcastConf.programs[programId]
+    if (customPodcastData.category) {
+        info.category = customPodcastData.category
+    }
+    let customPodcastAlbum = customPodcastData.album[mediaType]
     if (customPodcastAlbum) {
         info.headPic = customPodcastAlbum
     }
@@ -54,6 +58,7 @@ function itemsAdapter(items, mediaType) {
             guid: member.guid,
             pubData: convDate(member.createDate),
             link: member.mUrl,
+            explicit: item.explicit,
 
             duration: member.duration,
             mediaUrl: file.mediaUrl,

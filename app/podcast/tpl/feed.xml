@@ -19,14 +19,14 @@
             <itunes:name>Kyle He</itunes:name>
             <itunes:email>ohyes@hk1229.cn</itunes:email>
         </itunes:owner>
-        <itunes:category text="Society &amp; Culture" />
-        <itunes:explicit>Yes</itunes:explicit>
+        <itunes:category text="${info.category}" />
 
 <!-- for: ${items} as ${item} -->
 <item>
     <title>${item.subtitle} ${item.title}</title>
     <itunes:author>${item.author}</itunes:author>
     <itunes:subtitle>${item.subtitle}</itunes:subtitle>
+    <itunes:explicit><!-- if: ${item.explicit} -->Yes<!-- else -->No<!-- /if --></itunes:explicit>
     <itunes:image href="${item.image}" />
     <enclosure url="${item.mediaUrl}" type="${item.mimeType}" length="${item.filesize}"/>
     <guid>${item.guid}</guid>
@@ -45,7 +45,7 @@
 
 <!-- target: feedback -->
 <!-- // 反馈 -->
-<p>（由于<a href="http://www.jiemian.com/article/1417385.html">某些原因</a>，凤凰网/凤凰视频/凤凰FM上的锵锵三人行都没了，所以停更了）</p>
+<p>（由于<a href="http://www.jiemian.com/article/1417385.html">某些原因</a>，凤凰网/凤凰视频/凤凰FM上的锵锵三人行都没了，<del>所以停更了</del>目前人肉更新音频版）</p>
 <p>
 <a href="https://qcdn.adeline.cc/vifeng/help/how-to-subscribe" target="_blank">帮助</a> |
 反馈:
