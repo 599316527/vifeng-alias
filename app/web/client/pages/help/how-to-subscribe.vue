@@ -17,7 +17,7 @@
   <blockquote>
     <p>首先你需要一个泛用型（或称通用型）播客客户端软件。</p>
     <p>在 iOS 和 Android 上，我推荐
-        <a target="_blank" href="https://itunes.apple.com/us/app/pocket-casts/id414834813">Pocket Casts</a> 。
+        <a target="_blank" href="https://itunes.apple.com/cn/app/pocket-casts/id414834813?mt=8&at=10lPYF">Pocket Casts</a> 。
     </p>
     <p>在 Mac 和 Windows 上用 iTunes 就好 <small>(文件 &gt; 订阅到播客)</small>。
         当然，您也可以随时在浏览器里访问 <router-link :to="{ name: 'index' }">节目的网站</router-link> 收听。
