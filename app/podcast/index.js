@@ -28,7 +28,7 @@ function generateFeed({info, items}, {programId, mediaType}) {
         let content = etpl.compile(tplContent)({
             programId,
             mediaType,
-            feedUrl: `${podcastConf.feedBaseUrl}/${mediaType}/${programId}.xml`,
+            baseUrl: podcastConf.baseUrl,
             year: (new Date()).getFullYear(),
             info,
             items: itemsAdapter(items, mediaType)

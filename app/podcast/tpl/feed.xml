@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
     <channel>
-        <atom:link href="${feedUrl}" type="application/rss+xml" rel="self" />
+        <atom:link href="${baseUrl}/podcast/${mediaType}/${programId}.xml" type="application/rss+xml" rel="self" />
         <copyright>Copyright © ${year} iFeng</copyright>
         <language>zh-cn</language>
-        <link>http://phtv.ifeng.com/program/${programId}/</link>
+        <link>${baseUrl}/program/${programId}/</link>
         <title>${info.name}<!-- if: ${mediaType} == 'video' -->🎬<!-- /if --></title>
         <itunes:keywords>${info.name}</itunes:keywords>
         <itunes:author>iFeng</itunes:author>
