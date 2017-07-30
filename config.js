@@ -48,7 +48,7 @@ exports.podcast = {
     programs: {
         qqsrx: {
             album: {
-                video: 'https://storage.adeline.cc/image/podcast/qqsrx/video.jpg',
+                video: 'http://wx1.sinaimg.cn/large/661b7679gy1fi2ghxcp2gj218g18g0v8.jpg',
                 audio: 'http://wx3.sinaimg.cn/large/661b7679gy1fhxks3ffcjj218g18gmz0.jpg'
             },
             category: 'Society & Culture'
