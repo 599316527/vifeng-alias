@@ -5,7 +5,7 @@
         <copyright>Copyright © ${year} iFeng</copyright>
         <language>zh-cn</language>
         <link>http://phtv.ifeng.com/program/${programId}/</link>
-        <title>${info.name}</title>
+        <title>${info.name}<!-- if: ${mediaType} == 'video' -->🎬<!-- /if --></title>
         <itunes:keywords>${info.name}</itunes:keywords>
         <itunes:author>iFeng</itunes:author>
         <itunes:subtitle>${info.name}</itunes:subtitle>
@@ -20,6 +20,7 @@
             <itunes:email>ohyes@hk1229.cn</itunes:email>
         </itunes:owner>
         <itunes:category text="${info.category}" />
+        <itunes:explicit>No</itunes:explicit>
 
 <!-- for: ${items} as ${item} -->
 <item>
