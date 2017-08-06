@@ -13,9 +13,9 @@
     <h3 class="lowdash">剧集列表</h3>
     <div class="search">
       <input type="text" v-model="keyword"
-        @keyup.enter="handleItemSearch"
-        @focus="isSearching = true"
-        @blur="isSearching = false" >
+        @keyup.enter="handleItemSearchEnter"
+        @focus="handleItemSearchFocus"
+        @blur="handleItemSearchBlur" >
     </div>
     <ul v-if="items.length">
       <li class="episode" v-for="(item, index) in items" :key="item.itemId">
@@ -97,7 +97,7 @@ export default {
   },
   asyncData (context) {
     let programId = context.params.programId
-    let pageNo = context.query.pageNo || 1
+    let pageNo = parseInt(context.query.pageNo, 10) || 1
     let keyword = context.query.keyword
     return Promise.all([
       axios.get(getApiUrl(`/api/program/${programId}/`, context)),
@@ -137,7 +137,7 @@ export default {
     return !!params.programId
   },
   methods: {
-    handleItemSearch() {
+    handleItemSearchEnter() {
       if (!this.keyword) {
         return
       }
@@ -150,6 +150,20 @@ export default {
           keyword: this.keyword
         }
       })
+    },
+    handleItemSearchFocus() {
+      this.isSearching = true
+    },
+    handleItemSearchBlur() {
+      this.isSearching = false
+      if (!this.keyword) {
+        this.$router.push({
+          name: 'program-programId',
+          params: {
+            programId: this.info.programId
+          }
+        })
+      }
     }
   }
 }
