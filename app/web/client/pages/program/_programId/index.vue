@@ -9,9 +9,15 @@
     <div class="desc">{{ info.desc }}</div>
   </div>
 
-  <div class="episodes">
+  <div class="episodes" :class="{'is-searching': isSearching || keyword}">
     <h3 class="lowdash">剧集列表</h3>
-    <ul>
+    <div class="search">
+      <input type="text" v-model="keyword"
+        @keyup.enter="handleItemSearch"
+        @focus="isSearching = true"
+        @blur="isSearching = false" >
+    </div>
+    <ul v-if="items.length">
       <li class="episode" v-for="(item, index) in items" :key="item.itemId">
         <div class="album">
           <div class="pic" :style="{'background-image': `url(${item.album})`}">
@@ -48,6 +54,29 @@
         </div>
       </li>
     </ul>
+    <div class="empty-list-tip" v-else>没有找到 ☹️</div>
+    <div class="page-nav">
+      <router-link v-if="pageNo > 1" :to="{
+        name: 'program-programId',
+        params: {
+          programId: info.programId
+        },
+        query: {
+          pageNo: pageNo - 1,
+          keyword
+        }
+      }">上一页</router-link>
+      <router-link :to="{
+        name: 'program-programId',
+        params: {
+          programId: info.programId
+        },
+        query: {
+          pageNo: pageNo + 1,
+          keyword
+        }
+      }">下一页</router-link>
+    </div>
   </div>
 </div>
 </template>
@@ -61,11 +90,18 @@ import {
 
 export default {
   name: 'Program',
+  data() {
+    return {
+      isSearching: false
+    }
+  },
   asyncData (context) {
     let programId = context.params.programId
+    let pageNo = context.query.pageNo || 1
+    let keyword = context.query.keyword
     return Promise.all([
       axios.get(getApiUrl(`/api/program/${programId}/`, context)),
-      axios.get(getApiUrl(`/api/program/items/${programId}/`, context))
+      axios.get(getApiUrl(`/api/program/items/${programId}/?pageNo=${pageNo}&pageSize=12${keyword ? ('&keyword=' + encodeURIComponent(keyword)) : ''}`, context))
     ]).then(function (results) {
       let [info, items] = results.map(function (result) {
         let data = apiResponseAdapter(result)
@@ -74,7 +110,7 @@ export default {
         }
         return data
       })
-      return { info, items }
+      return { info, items, pageNo, keyword }
     }).catch((err) => {
       context.error({
         statusCode: 404,
@@ -99,6 +135,22 @@ export default {
   },
   validate ({ params }) {
     return !!params.programId
+  },
+  methods: {
+    handleItemSearch() {
+      if (!this.keyword) {
+        return
+      }
+      this.$router.push({
+        name: 'program-programId',
+        params: {
+          programId: this.info.programId
+        },
+        query: {
+          keyword: this.keyword
+        }
+      })
+    }
   }
 }
 </script>
@@ -136,6 +188,7 @@ export default {
 }
 .program .episodes {
   margin-top: 2em;
+  position: relative;
 }
 .program .episodes ul {
   padding: 0;
@@ -144,6 +197,59 @@ export default {
 .program .episodes h3 {
   font-weight: normal;
   text-align: center;
+  transition: transform 340ms;
+}
+
+.program .episodes .search {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  background: url(../../../assets/search-icon.png) no-repeat right center / auto 20px;
+  opacity: .5;
+  transition: width 340ms, opacity 340ms;
+}
+.program .episodes .search input {
+  width: 100%;
+  height: 28px;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+  box-sizing: border-box;
+  padding: 0 5px;
+  color: rgba(0,0,0,0);
+}
+.program .episodes.is-searching .search {
+  width: calc(100% - 220px);
+  opacity: 1;
+  border-bottom: 1px solid #aaa;
+}
+.program .episodes.is-searching .search input {
+  color: #333;
+}
+.program .episodes.is-searching h3 {
+  transform: translateX(calc(-50% + 100px));
+}
+
+.program .episodes .page-nav {
+  margin: 2em 0;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+.program .episodes .page-nav a {
+  text-decoration: none;
+  color: #444;
+  display: block;
+  flex: 1 0 50%;
+  line-height: 2.8em;
+  background: #eee;
+  margin: 0 1px;
+}
+.program .episodes .empty-list-tip {
+  text-align: center;
+  margin: 4em 0;
 }
 
 .program .episode {
@@ -160,9 +266,7 @@ export default {
   position: relative;
   width: 100%;
   padding-top: 56.25%;
-  /*background: url(../assets/image-placeholder.jpg);*/
-  background-position: center;
-  background-size: cover;
+  background: #eee center / cover;
 }
 .program .episode .album .duration {
   position: absolute;
@@ -221,10 +325,10 @@ export default {
 .program .episode .files .mp41M {
   padding-left: 2em;
   background-position: 8px center;
-  background-image: url(../../assets/tv.svg);
+  background-image: url(../../../assets/tv.svg);
 }
 .program .episode .files .mp3 {
-  background-image: url(../../assets/airpods.svg);
+  background-image: url(../../../assets/airpods.svg);
 }
 .program .episode .files small {
   margin-left: 4px;

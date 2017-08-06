@@ -65,12 +65,21 @@ router.get('/program/items/:programId/', function (req, res, next) {
         throw new Error('Unacceptable programId')
     }
 
-    let {pageNo, pageSize} = req.query
+    let {pageNo, pageSize, keyword} = req.query
     pageNo = parseInt(pageNo, 10) || 1
     pageSize = parseInt(pageSize, 10) || webappConf.pageCount
 
+    let filter = {}
+    if (keyword) {
+        filter = {
+            $text: {
+                $search: keyword
+            }
+        }
+    }
+
     let programModel = new ProgramModel(programId, {db: req.app.locals.mongodb})
-    programModel.readProgramItems({pageNo, pageSize}).then(function (data) {
+    programModel.readProgramItems({pageNo, pageSize, filter}).then(function (data) {
         res.json({
             status: 'ok',
             data: data.map(programItemDataAdapter).map(function (item) {
