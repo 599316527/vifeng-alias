@@ -67,13 +67,22 @@ router.get('/program/items/:programId/', function (req, res, next) {
 
     let {pageNo, pageSize, keyword} = req.query
     pageNo = parseInt(pageNo, 10) || 1
-    pageSize = parseInt(pageSize, 10) || webappConf.pageCount
+    pageSize = parseInt(pageSize, 10) || webappConf.pageSize
 
     let filter = {}
     if (keyword) {
-        filter = {
-            $text: {
-                $search: keyword
+        if (/^20\d{6}$/.test(keyword)) {
+            filter['memberItem.programId'] = keyword
+        }
+        else {
+            // MongoDB 社区版的 $text 不支持中文，用正则
+            keyword = keyword
+                .replace(/[\x21-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]/g, '')
+                .trim()
+                .replace(/\s+/g, '|')
+            filter.title = {
+                $regex: keyword,
+                $options: '$i'
             }
         }
     }
@@ -107,12 +116,18 @@ router.get('/program/item/:programId/:itemId/', function (req, res, next) {
         programModel.readProgramInfo(),
         programModel.readProgramItem(itemId)
     ]).then(function ([program, itemData]) {
-        res.json({
-            status: 'ok',
-            data: Object.assign(programItemDataAdapter(itemData), {
+        let data = {
+            status: 'ok'
+        }
+        if (!itemData) {
+            data.status = 'fail'
+        }
+        else {
+            data.data = Object.assign(programItemDataAdapter(itemData), {
                 program: programInfoDataAdapter(program)
             })
-        })
+        }
+        res.json(data)
     }).catch(function (err) {
         next(err)
     })

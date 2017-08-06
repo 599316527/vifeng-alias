@@ -57,7 +57,7 @@ exports.podcast = {
 }
 
 exports.webapp = {
-    pageCount: 20,
+    pageSize: 20,
     baseUrl: '/vifeng',
     recaptcha: {
         siteKey: '6LfuXw4UAAAAAOOZ6tbepWc4NLIRr5GakiJ-IivB',

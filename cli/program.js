@@ -12,7 +12,7 @@ function update(params, options) {
         process.exit(1)
     }
 
-    return fetchProgram(programId, options.pageNo, options.pageCount).then(function ({weMedia, bodyList}) {
+    return fetchProgram(programId, options.pageNo, options.pageSize).then(function ({weMedia, bodyList}) {
         let programModel = new ProgramModel(programId, {
             db: options.db
         })
@@ -28,7 +28,7 @@ function update(params, options) {
 }
 
 function podcast(params, {
-    mediaType, db, pageNo, pageCount
+    mediaType, db, pageNo, pageSize
 }) {
     let programId = params[0]
     if (!programId) {
@@ -57,7 +57,7 @@ function podcast(params, {
         programModel.readProgramInfo(),
         programModel.readProgramItems({
             pageNo,
-            pageCount,
+            pageSize,
             filter
         })
     ]).then(function ([info, items]) {

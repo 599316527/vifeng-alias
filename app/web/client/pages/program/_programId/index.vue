@@ -101,7 +101,7 @@ export default {
     let keyword = context.query.keyword
     return Promise.all([
       axios.get(getApiUrl(`/api/program/${programId}/`, context)),
-      axios.get(getApiUrl(`/api/program/items/${programId}/?pageNo=${pageNo}&pageSize=12${keyword ? ('&keyword=' + encodeURIComponent(keyword)) : ''}`, context))
+      axios.get(getApiUrl(`/api/program/items/${programId}/?pageNo=${pageNo}&pageSize=10${keyword ? ('&keyword=' + encodeURIComponent(keyword)) : ''}`, context))
     ]).then(function (results) {
       let [info, items] = results.map(function (result) {
         let data = apiResponseAdapter(result)
@@ -221,7 +221,7 @@ export default {
   color: rgba(0,0,0,0);
 }
 .program .episodes.is-searching .search {
-  width: calc(100% - 220px);
+  width: calc(100% - 224px - 26px);
   opacity: 1;
   border-bottom: 1px solid #aaa;
 }
@@ -229,7 +229,7 @@ export default {
   color: #333;
 }
 .program .episodes.is-searching h3 {
-  transform: translateX(calc(-50% + 100px));
+  transform: translateX(calc(-50% + 112px));
 }
 
 .program .episodes .page-nav {
