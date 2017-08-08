@@ -15,8 +15,13 @@
     <div class="program-title">{{ title }}</div>
   </div>
   <div class="player">
-    <player v-if="video" :src="video.mediaUrl" :poster="album" :media-type="mediaType" />
+    <player v-if="video" :src="video.mediaUrl" :poster="album" :media-type="mediaType"
+      @load="handlePlayerLoad" @error="handlePlayerError" />
     <div class="empty" v-else>no video</div>
+  </div>
+  <div class="player-error-tip" v-if="error">
+    无法播放？<small>复制这个链接在新标签页打开</small>&nbsp;
+    <a :href="video.mediaUrl" @click.prevent>{{ video.mediaUrl }}</a>
   </div>
   <div class="desc">{{ desc }}</div>
   <div class="author">
@@ -56,6 +61,11 @@ export default {
         })
       })
   },
+  data() {
+    return {
+      error: false
+    }
+  },
   computed: {
     video() {
       return this.videos.filter((video) => {
@@ -64,7 +74,12 @@ export default {
     }
   },
   methods: {
-
+    handlePlayerLoad() {
+      this.error = false
+    },
+    handlePlayerError() {
+      this.error = true
+    }
   }
 }
 
@@ -123,5 +138,21 @@ function asyncDataAdapater(data) {
   margin: 0 3px;
   font-size: 14px;
   color: #666;
+}
+.media .player-error-tip {
+  margin: 1em 0;
+}
+.media .player-error-tip a {
+  color: white;
+  background: #ED802F;
+  padding: 2px 8px;
+  text-decoration: none;
+  display: inline-block;
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: text-bottom;
 }
 </style>

@@ -33,6 +33,12 @@ export default {
       this.playing = false
       this.$emit('pause')
     },
+    handleMediaLoad(evt) {
+      this.$emit('load', evt)
+    },
+    handleMediaError(evt) {
+      this.$emit('error', evt)
+    },
     play() {
       this.$refs.player.play()
     },

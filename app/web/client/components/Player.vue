@@ -6,9 +6,11 @@
 }" @mousedown="handleMouseDown" @mouseup="handleMouseUp"
   @touchstart="handleTouchStart" @touchend="handleTouchEnd">
   <audio-player ref="aplayer" v-if="mediaType === 'mp3'" :src="src" :poster="poster"
-    @playing="handleMediaPlaying" @pause="handleMediaPause" />
+    @playing="handleMediaPlaying" @pause="handleMediaPause"
+    @load="handlePlayerLoad" @error="handlePlayerError" />
   <video-player ref="vplayer" v-else :src="src" :poster="poster"
-    @playing="handleMediaPlaying" @pause="handleMediaPause" />
+    @playing="handleMediaPlaying" @pause="handleMediaPause"
+    @load="handlePlayerLoad" @error="handlePlayerError" />
   <div class="color-layer"></div>
   <div class="type-identifier" ref="typeIdentifier"></div>
   <div class="ctrl-layer" @click="handleCtrlLayerClick">
@@ -23,6 +25,7 @@
       <input type="range" min="0.5" max="2" step="0.1" v-model="playbackRate">
     </div>
   </div>
+  <div class="error" v-if="error">{{error}}</div>
 </div>
 </template>
 
@@ -53,7 +56,8 @@ export default {
     return {
       playing: false,
       playbackRate: 1,
-      showCtrls: false
+      showCtrls: false,
+      error: null
     }
   },
   watch: {
@@ -125,6 +129,14 @@ export default {
     },
     handleTouchEnd(evt) {
       this.handlePointEnd(evt.changedTouches[0], evt)
+    },
+    handlePlayerLoad(evt) {
+      this.error = null
+      this.$emit('load')
+    },
+    handlePlayerError(evt) {
+      this.error = evt.target.error.message
+      this.$emit('error', evt.error)
     }
   },
   mounted() {
@@ -275,5 +287,18 @@ function replaceIdentifier(node) {
 }
 .player .ctrls .speed input {
   flex: 1 1;
+}
+.player .error {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .8);
+  color: #fff;
+  font-size: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

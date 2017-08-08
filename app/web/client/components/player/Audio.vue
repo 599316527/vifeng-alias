@@ -5,7 +5,8 @@
   }"></div>
   <audio :src="src" :autoplay="autoplay" :loop="loop" :muted="muted"
     playsinline controls ref="player"
-    @playing="handleMediaPlaying" @pause="handleMediaPause"></audio>
+    @playing="handleMediaPlaying" @pause="handleMediaPause"
+    @load="handleMediaLoad" @error="handleMediaError"></audio>
 </div>
 </template>
 

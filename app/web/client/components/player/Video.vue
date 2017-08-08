@@ -2,7 +2,8 @@
 <div class="video-player">
   <video :src="src" :poster="poster" :autoplay="autoplay" :loop="loop" :muted="muted"
     playsinline controls ref="player"
-    @playing="handleMediaPlaying" @pause="handleMediaPause"></video>
+    @playing="handleMediaPlaying" @pause="handleMediaPause"
+    @load="handleMediaLoad" @error="handleMediaError"></video>
 </div>
 </template>
 
