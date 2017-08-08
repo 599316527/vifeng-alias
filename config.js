@@ -18,7 +18,7 @@ const userAgent = 'ifengPlayer/7.4.1 (iPhone; iOS 10.3.2; Scale/2.00)'
 const programs = {
     qqsrx: {
         weMediaId: 12,
-        album: 'http://wx1.sinaimg.cn/large/661b7679gy1fi2ghxcp2gj218g18g0v8.jpg'
+        album: 'https://wx1.sinaimg.cn/large/661b7679gy1fi2ghxcp2gj218g18g0v8.jpg'
     },
     yhyxt: {
         weMediaId: 104
@@ -48,8 +48,8 @@ exports.podcast = {
     programs: {
         qqsrx: {
             album: {
-                video: 'http://wx1.sinaimg.cn/large/661b7679gy1fi2ghxcp2gj218g18g0v8.jpg',
-                audio: 'http://wx3.sinaimg.cn/large/661b7679gy1fhxks3ffcjj218g18gmz0.jpg'
+                video: 'https://wx1.sinaimg.cn/large/661b7679gy1fi2ghxcp2gj218g18g0v8.jpg',
+                audio: 'https://wx3.sinaimg.cn/large/661b7679gy1fhxks3ffcjj218g18gmz0.jpg'
             },
             category: 'Society & Culture'
         }
@@ -62,5 +62,9 @@ exports.webapp = {
     recaptcha: {
         siteKey: '6LfuXw4UAAAAAOOZ6tbepWc4NLIRr5GakiJ-IivB',
         secretKey: '6LfuXw4UAAAAAOS69u48Vfit6q7LKwU6rk66tovW'
+    },
+    ga: {
+        tid: 'UA-15360693-10'
     }
 }
+
