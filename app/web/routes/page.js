@@ -9,17 +9,28 @@ let { webapp: {ga} } = require('../../../config')
 let express = require('express')
 let router = express.Router()
 
+let cidCookieOptions = {
+    maxAge: 100 * 24 * 3600 * 1e3,
+    httpOnly: true,
+    secure: true
+}
+
 let podcastFeedXmlDir = path.resolve(__dirname, '../../podcast/dist')
 router.get('/podcast/:mediaType/:programId.xml', function (req, res, next) {
     let docPath = path.join(req.baseUrl, req.path)
+
+    // Support legacy 301 urls
     let cid = req.query.cid
-    if (!cid) {
-        let cid = uuidv4()
-        let newUrl = `${docPath}?cid=${encodeURIComponent(cid)}`
-        res.redirect(301, newUrl).end()
+    if (cid) {
+        res.cookie('cid', cid, cidCookieOptions)
+        res.redirect(301, docPath).end()
         next()
         return
     }
+
+    cid = req.cookies.cid || uuidv4()
+    res.cookie('cid', cid, cidCookieOptions)
+
     let {programId, mediaType} = req.params
     let filename = `${programId}-${mediaType}.xml`
     let file = path.join(podcastFeedXmlDir, filename)

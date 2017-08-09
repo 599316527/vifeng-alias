@@ -3,6 +3,7 @@ let MongoClient = require('mongodb').MongoClient
 let path = require('path')
 let express = require('express')
 let bodyParser = require('body-parser')
+let cookieParser = require('cookie-parser')
 
 let getMongodbConnectionUrl = require('../../lib/UrlBuilder').getMongodbConnectionUrl
 let { mongo: mongoConf, webapp: webappConf } = require('../../config')
@@ -11,6 +12,7 @@ let webAppBaseUrl = webappConf.baseUrl
 
 let app = express()
 app.use(bodyParser.json())
+app.use(cookieParser())
 
 app.use(path.join(webAppBaseUrl, '/api'), require('./routes/api'))
 app.use(path.join(webAppBaseUrl, '/'), require('./routes/page'))
