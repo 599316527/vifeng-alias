@@ -60,26 +60,35 @@ router.use(nuxt.render)
 
 module.exports = router
 
+let googleAnalyticsLogs = []
 function saveGoogleAnalyticsLog({cid, uip, ua, dh, dp}) {
-    let body = (new URLSearchParams({
+    let log = (new URLSearchParams({
         v: 1,
         t: 'pageview',
         tid: ga.tid,
         cid,
-        uip,
+        uip: uip.substring(uip.lastIndexOf(':') + 1),
         ua,
         dh,
         dp,
         ds: 'node',
         z: Date.now()
     })).toString()
+    googleAnalyticsLogs.push(log)
 
-    return fetch('https://www.google-analytics.com/collect', {
+    if (googleAnalyticsLogs.length > 15) {
+        sendGoogleAnalyticsLogs(googleAnalyticsLogs)
+        googleAnalyticsLogs = []
+    }
+}
+
+function sendGoogleAnalyticsLogs(logs) {
+    return fetch('https://www.google-analytics.com/batch', {
         method: 'POST',
-        body
+        body: logs.join('\n')
     })
         // .then(function(res) {
-        //     return res.json();
+        //     return res.text();
         // })
         // .then(function(data) {
         //     console.log(data)
@@ -87,5 +96,4 @@ function saveGoogleAnalyticsLog({cid, uip, ua, dh, dp}) {
         //     console.log(err)
         // })
 }
-
 

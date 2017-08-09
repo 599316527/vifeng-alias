@@ -127,7 +127,10 @@ export default {
         return data
       })
       return {
-        context,
+        context: {
+          // 直接写 context 会导致 ssr 的时候报错 Converting circular structure to JSON
+          isServer: context.isServer
+        },
         programs,
         recaptcha
       }

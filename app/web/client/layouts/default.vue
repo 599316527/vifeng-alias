@@ -140,17 +140,18 @@ h2 {
   font-weight: bolder;
 }
 .header .logo {
+  margin-left: 1em;
   padding: 3px 0;
-  width: 1em;
+  width: 1.5em;
   height: 1em;
   overflow: hidden;
 }
 .header .logo div {
-  width: 1em;
+  width: 100%;
   height: 2.5em;
   display: block;
-  background: url(../assets/phoenix_logo.svg) no-repeat 0 0 / 100% auto,
-    url(../assets/scroll-up.svg) no-repeat 0 bottom / 100% auto;
+  background: url(../assets/vifeng.svg) no-repeat center 0 / 100% auto,
+    url(../assets/scroll-up.svg) no-repeat center bottom / 67% auto;
   transform: translate(0);
   transition: transform 600ms cubic-bezier(.42,.26,.43,1.32);
 }
