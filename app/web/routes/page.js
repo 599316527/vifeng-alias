@@ -17,24 +17,7 @@ let cidCookieOptions = {
 
 let podcastFeedXmlDir = path.resolve(__dirname, '../../podcast/dist')
 router.get('/podcast/:mediaType/:programId.xml', function (req, res, next) {
-    let docPath = path.join(req.baseUrl, req.path)
-
-    let cdnHostname = 'qcdn.adeline.cc'
-    // https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#x-headers
-    if (req.get('X-Forwarded-Host') !== cdnHostname) {
-        res.redirect(301, `https://${cdnHostname}${docPath}`).end()
-        return
-    }
-
-    // Support legacy 301 urls
-    let cid = req.query.cid
-    if (cid) {
-        res.cookie('cid', cid, cidCookieOptions)
-        res.redirect(301, docPath).end()
-        return
-    }
-
-    cid = req.cookies.cid || uuidv4()
+    let cid = req.cookies.cid || uuidv4()
     res.cookie('cid', cid, cidCookieOptions)
 
     let {programId, mediaType} = req.params
@@ -47,13 +30,14 @@ router.get('/podcast/:mediaType/:programId.xml', function (req, res, next) {
         return promisify(fs.readFile)(file, 'utf8')
     }).then(function (content) {
         res.type('xml').send(content).end()
+
         if (cid) {
             saveGoogleAnalyticsLog({
                 cid,
-                uip: req.ip,
+                uip: req.get('X-Forwarded-For') || req.ip,
                 ua: req.get('User-Agent'),
-                dh: req.hostname,
-                dp: docPath
+                dh: req.get('X-Forwarded-Host') || req.hostname,
+                dp: path.join(req.baseUrl, req.path)
             })
         }
     }).catch(function (err) {
@@ -73,7 +57,7 @@ function saveGoogleAnalyticsLog({cid, uip, ua, dh, dp}) {
         t: 'pageview',
         tid: ga.tid,
         cid,
-        uip: uip.substring(uip.lastIndexOf(':') + 1),
+        uip,
         ua,
         dh,
         dp,
