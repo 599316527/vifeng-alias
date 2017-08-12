@@ -11,7 +11,7 @@
   <video-player ref="vplayer" v-else :src="src" :poster="poster"
     @playing="handleMediaPlaying" @pause="handleMediaPause"
     @load="handlePlayerLoad" @error="handlePlayerError" />
-  <div class="color-layer"></div>
+  <!-- <div class="color-layer"></div> -->
   <div class="type-identifier" ref="typeIdentifier"></div>
   <div class="ctrl-layer" @click="handleCtrlLayerClick">
     <div v-if="!playing" class="play"></div>

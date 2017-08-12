@@ -19,12 +19,18 @@ let podcastFeedXmlDir = path.resolve(__dirname, '../../podcast/dist')
 router.get('/podcast/:mediaType/:programId.xml', function (req, res, next) {
     let docPath = path.join(req.baseUrl, req.path)
 
+    let cdnHostname = 'qcdn.adeline.cc'
+    // https://httpd.apache.org/docs/2.4/mod/mod_proxy.html#x-headers
+    if (req.get('X-Forwarded-Host') !== cdnHostname) {
+        res.redirect(301, `https://${cdnHostname}${docPath}`).end()
+        return
+    }
+
     // Support legacy 301 urls
     let cid = req.query.cid
     if (cid) {
         res.cookie('cid', cid, cidCookieOptions)
         res.redirect(301, docPath).end()
-        next()
         return
     }
 
