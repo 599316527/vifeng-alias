@@ -3,7 +3,7 @@ let fs = require('fs')
 let uuidv4 = require('uuid/v4')
 let fetch = require('node-fetch')
 let { URLSearchParams } = require('url')
-let promisify = require('../../../lib/helper').promisify
+let { promisify } = require('util')
 let { webapp: {ga} } = require('../../../config')
 
 let express = require('express')

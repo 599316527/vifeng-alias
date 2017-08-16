@@ -26,10 +26,10 @@ ProgramFetcher.fetchProgram(programId, pageNo, pageSize).then(function (data) {
     // data.weMedia  -> 节目信息
     // data.bodyList -> 剧集列表
 
-    let model = new ProgramModel(programId, {db})
+    let model = new ProgramModel({db})
     return Promise.all([
-        model.saveProgramInfo(data.weMedia),
-        model.saveProgramItems(data.bodyList)
+        model.saveProgramInfo(programId, data.weMedia),
+        model.saveProgramItems(programId, data.bodyList)
     ])
 })
 ```

@@ -5,6 +5,7 @@ let express = require('express')
 let bodyParser = require('body-parser')
 let cookieParser = require('cookie-parser')
 
+let eventBus = require('./eventBus')
 let getMongodbConnectionUrl = require('../../lib/UrlBuilder').getMongodbConnectionUrl
 let { mongo: mongoConf, webapp: webappConf } = require('../../config')
 
@@ -14,7 +15,7 @@ let app = express()
 app.use(bodyParser.json())
 app.use(cookieParser())
 
-app.use(path.join(webAppBaseUrl, '/api'), require('./routes/api'))
+app.use(path.join(webAppBaseUrl, '/graphql'), require('./routes/graphql'))
 app.use(path.join(webAppBaseUrl, '/'), require('./routes/page'))
 
 app.use(function (req, res, next) {
@@ -34,6 +35,7 @@ MongoClient.connect(connectionUrl).then(function (db) {
     app.locals.mongodb = db
     let port = process.env.PORT || 8004
     app.listen(port)
+    eventBus.emit('app-listening', app.locals)
     console.log('Server is listening on ' + port)
 })
 

@@ -1,0 +1,68 @@
+
+type Program {
+    name: String
+    headPic: String
+    programId: String
+}
+
+type Episode {
+    itemId: String!
+    programId: String
+    programNo: String
+    title: String
+    album: String
+    author: String
+    createDate: String
+    updateDate: String
+    desc: String
+    duration: Int,
+    media: [Medium]
+}
+
+enum MediumType {
+    VIDEO, AUDIO
+}
+
+type Medium {
+    type: MediumType!
+    url: String
+    filesize: Int
+}
+
+type Recaptcha {
+    siteKey: String!
+}
+
+type Query {
+    programs: [Program]
+    program(programId: String!): Program
+    episodes(programId: String!, pageNo: Int, pageSize: Int, keyword: String): [Episode]
+    episode(programId: String!, itemId: String!, type: MediumType): Episode
+    recaptcha: Recaptcha
+}
+
+
+input CustomEpisode {
+    programId: String!
+    programNo: String!
+    title: String
+    album: String
+    auther: String
+    desc: String
+    duration: Int
+    videoUrl: String
+    videoFileSize: Int
+    audioUrl: String
+    audioFileSize: Int
+    itemId: String
+}
+
+type Mutation {
+    updateEpisode(episode: CustomEpisode): Episode
+}
+
+
+schema {
+  query: Query
+  mutation: Mutation
+}

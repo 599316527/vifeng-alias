@@ -13,14 +13,14 @@ function update(params, options) {
     }
 
     return fetchProgram(programId, options.pageNo, options.pageSize).then(function ({weMedia, bodyList}) {
-        let programModel = new ProgramModel(programId, {
+        let programModel = new ProgramModel({
             db: options.db
         })
 
         return Promise.all([
             Promise.resolve(weMedia),
-            programModel.saveProgramInfo(weMedia),
-            programModel.saveProgramItems(bodyList)
+            programModel.saveProgramInfo(programId, weMedia),
+            programModel.saveProgramItems(programId, bodyList)
         ])
     }).then(function ([weMedia, infoResult, listResult]) {
         console.log('节目«%s»已更新', weMedia.name)
@@ -40,7 +40,7 @@ function podcast(params, {
         mediaType = 'video'
     }
 
-    let programModel = new ProgramModel(programId, { db })
+    let programModel = new ProgramModel({ db })
 
     let filter = {
         'memberItem.videoFiles': {
@@ -54,8 +54,8 @@ function podcast(params, {
     }
 
     return Promise.all([
-        programModel.readProgramInfo(),
-        programModel.readProgramItems({
+        programModel.readProgramInfo(programId),
+        programModel.readProgramItems(programId, {
             pageNo,
             pageSize,
             filter
