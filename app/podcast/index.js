@@ -48,6 +48,7 @@ function itemsAdapter(items, mediaType) {
         let file = member.videoFiles.filter(function (file) {
             return file.useType === useTypes[mediaType]
         })[0]
+        let link = `${podcastConf.baseUrl}/program/media/${file.useType}/${item.itemId}`
 
         return {
             title: member.name,
@@ -57,7 +58,7 @@ function itemsAdapter(items, mediaType) {
             image: item.imageList[0].image,
             guid: member.guid,
             pubData: convDate(member.createDate),
-            link: member.mUrl,
+            link,
             explicit: item.explicit,
 
             duration: member.duration,
